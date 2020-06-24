@@ -1,5 +1,7 @@
 package com.mycompany.trabalho01;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +22,14 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();*/
-        Corrida corrida = new Corrida("Machado");
-        corrida.criarEquipes(5);
-        //corrida.imprimir();
-        corrida.inicia();
+        Corrida corrida = new Corrida("Machado", 5);
+        corrida.criarEquipes(2);
+        try {
+            //corrida.imprimir();
+            corrida.inicia();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
