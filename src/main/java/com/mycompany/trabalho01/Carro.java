@@ -19,6 +19,10 @@ public class Carro implements Runnable{
     final int VOLTAS = 10;
     private estado e;
     
+    private Corrida corridaAtual;
+    private double tempoAcumulado;
+    private double tempoUltimaVolta;
+    
     public enum estado{
         PARADO("Parado"),
         CORRENDO("Correndo"),
@@ -50,16 +54,33 @@ public class Carro implements Runnable{
         this.idCarro = id;
         this.posicao = posicao;
         e = estado.fromInteger(0);
+        tempoAcumulado = 0;
     }
     
+    public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
+        this.idPiloto = idPiloto;
+        this.idCarro = id;
+        this.posicao = posicao;
+        this.corridaAtual = corridaAtual;
+        e = estado.fromInteger(0);
+        tempoAcumulado = 0;
+    }
+    
+    //uma volta
     @Override
     public void run() {
-        double tempoInicial = nanoTime();
+        int x = (int) (Math.random() * 100); //entre 0 e 100
         e = estado.fromInteger(1);
-        for(int i=0;i<VOLTAS;i++){
-            System.out.println("ID:"+idCarro);
+        tempoUltimaVolta = 0;
+        double tempoInicial = nanoTime();
+        
+        if(x % 2 == 0){
+            System.out.println(idCarro+" parou pra trocar pneu. Mais 0.05ms");
+            tempoUltimaVolta += 0.05;
         }
-        System.out.println("ID:"+idCarro + "  Completou em:" +(nanoTime()-tempoInicial)/1000000+"ms");        
+        
+        tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
+        tempoAcumulado += tempoUltimaVolta;
     }
 
     public String getIdPiloto() {
@@ -94,9 +115,31 @@ public class Carro implements Runnable{
         this.comb = comb;
     }
 
-    /*public void imprimir(){
-        System.out.println("Id carro: "+idCarro);
-    }*/
+    public Corrida getCorridaAtual() {
+        return corridaAtual;
+    }
+
+    public void setCorridaAtual(Corrida corridaAtual) {
+        this.corridaAtual = corridaAtual;
+    }
+
+    public double getTempoAcumulado() {
+        return tempoAcumulado;
+    }
+
+    public void setTempoAcumulado(double tempoAcumulado) {
+        this.tempoAcumulado = tempoAcumulado;
+    }
+
+    public double getTempoUltimaVolta() {
+        return tempoUltimaVolta;
+    }
+
+    public void setTempoUltimaVolta(double tempoUltimaVolta) {
+        this.tempoUltimaVolta = tempoUltimaVolta;
+    }
+    
+    
   
 }
 //ronaldo monobola
