@@ -74,17 +74,19 @@ public class Carro implements Runnable{
         e = estado.fromInteger(1);
         Eventos eventos = new Eventos();
         boolean pitstop = true;
+        tempoUltimaVolta = 0;
         for(int i=0;i<30;i++){
-            tempoUltimaVolta = 0;
             double tempoInicial = nanoTime();
-            tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
+            tempoUltimaVolta += (nanoTime()-tempoInicial)/100000;
             if(pitstop){
                 if(eventos.pitStop(this)){
                     tempoUltimaVolta += 0.05;
                     pitstop = false;
+                    this.desgaste = 0;
                 }
             }
-            tempoAcumulado += tempoUltimaVolta;
+            this.desgaste ++;
+            tempoAcumulado += tempoUltimaVolta + 0.001*this.desgaste;
         }
     }
     

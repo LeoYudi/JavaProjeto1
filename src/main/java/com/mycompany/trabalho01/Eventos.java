@@ -32,10 +32,8 @@ public class Eventos {
         int x = (int) (Math.random() * 10000);
         if(x < carro.getDesgaste()){
             System.out.println(carro.getIdCarro()+" parou no pitstop. Mais 0.05ms");
-            carro.setDesgaste(0);
             return true;
         }
-        carro.setDesgaste(carro.getDesgaste()+1);
         return false;
     }
     
