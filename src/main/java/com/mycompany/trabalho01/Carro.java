@@ -84,7 +84,7 @@ public class Carro implements Runnable{
             tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
             if(pitstop){
                 if(eventos.pitStop(this)){
-                    tempoUltimaVolta += 3.5;
+                    tempoUltimaVolta += 20;
                     pitstop = false;
                     this.desgaste = 0;
                 }
@@ -170,7 +170,7 @@ public class Carro implements Runnable{
         return velocidade;
     }
 
-    public void setVelocidade(int velocidade) {
+    public void setVelocidade(double velocidade) {
         this.velocidade = velocidade;
     }
    
