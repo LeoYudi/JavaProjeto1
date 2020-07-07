@@ -97,6 +97,7 @@ public class Carro implements Runnable{
                 quebrado = true;
                 tempoUltimaVolta = 0;
                 tempoAcumulado = Double.MAX_VALUE;
+                desgaste = 0;
             }
             tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
         }
@@ -180,6 +181,14 @@ public class Carro implements Runnable{
         }
         else return Double.toString(tempoAcumulado);
     }
+    
+    public void resetar(Corrida novaCorrida){
+        this.corridaAtual = novaCorrida;
+        this.quebrado = false;
+        this.tempoAcumulado = 0;
+        this.tempoUltimaVolta = 0;
+        this.desgaste = 0;
+        this.e = estado.fromInteger(0);
+    }
    
 }
-//ronaldo monobola
