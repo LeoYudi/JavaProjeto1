@@ -134,7 +134,7 @@ public class Corrida {
     
     public void imprimirCarrosEmOrdem(){
         for (Carro carro : carros) {
-            System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
+            System.out.printf("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao());
         }
     }
     
