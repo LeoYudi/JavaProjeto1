@@ -33,7 +33,7 @@ public class MainApp extends Application {
         this.equipes = new ArrayList();
         this.corridas = new ArrayList();
         
-        Corrida corrida = new Corrida("Machado", 5, 8);
+        Corrida corrida = new Corrida("Machado", 20, 8);
         corrida.setCarros(carros);
         corrida.setEquipes(equipes);
         this.corridas.add(corrida);

@@ -180,8 +180,25 @@ public class Carro implements Runnable{
             return "Quebrado";
         }
         else {
-            return String.format("%.2f", tempoAcumulado);
+            return String.format("%f", tempoAcumulado);
         }
+    }
+    
+    public String secondsToTime(long seconds){
+        int hora = (int) (seconds / 3600);
+        int minuto = (int) ((seconds % 3600) / 60);
+        int segundo = (int) (seconds % 60);
+        
+        String tempo = String.format("%02d:%02d:%02d", hora, minuto, segundo);
+        return tempo;
+    }
+    
+    public String minutesToTime(double minutes){
+        String str = "";
+        
+        int hora = (int) minutes/60;
+        int minutos = (int) minutes%60;
+        return str;
     }
     
     public void resetar(Corrida novaCorrida){
