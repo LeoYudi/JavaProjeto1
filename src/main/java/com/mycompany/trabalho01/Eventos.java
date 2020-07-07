@@ -21,25 +21,35 @@ public class Eventos {
         
     }
     
-    public void quebraCarro(){
-        
+    public boolean quebraCarro(Carro carro){
+        int x = (int)(Math.random()*1000);
+        if(x == 0)
+            return true;
+        return false;
     }
     
-    public void pitStop(){
-        
-    }
-    
-    public void gerarEvento(){
-        switch(num){
-            case 0:
-                chuva();
-            case 1:
-                acidente();
-            case 2:
-                quebraCarro();
-            case 3:
-                pitStop();
+    public boolean pitStop(Carro carro){
+        int x = (int) (Math.random() * 10000);
+        if(x < carro.getDesgaste()){
+            System.out.println(carro.getIdCarro()+" parou no pitstop. Mais 0.05ms");
+            carro.setDesgaste(0);
+            return true;
         }
+        carro.setDesgaste(carro.getDesgaste()+1);
+        return false;
     }
+    
+//    public void gerarEvento(){
+//        switch(num){
+//            case 0:
+//                chuva();
+//            case 1:
+//                acidente();
+//            case 2:
+//                quebraCarro();
+//            case 3:
+//                pitStop();
+//        }
+//    }
     
 }

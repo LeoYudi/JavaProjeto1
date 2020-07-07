@@ -18,6 +18,7 @@ public class Carro implements Runnable{
     private int comb;
     final int VOLTAS = 10;
     private estado e;
+    private int desgaste;
     
     private Corrida corridaAtual;
     private double tempoAcumulado;
@@ -55,6 +56,7 @@ public class Carro implements Runnable{
         this.posicao = posicao;
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
+        this.desgaste = 0;
     }
     
     public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
@@ -69,20 +71,23 @@ public class Carro implements Runnable{
     //uma volta
     @Override
     public void run() {
-        int x = (int) (Math.random() * 100); //entre 0 e 100
         e = estado.fromInteger(1);
-        tempoUltimaVolta = 0;
-        double tempoInicial = nanoTime();
-        
-        if(x % 2 == 0){
-            System.out.println(idCarro+" parou pra trocar pneu. Mais 0.05ms");
-            tempoUltimaVolta += 0.05;
+        Eventos eventos = new Eventos();
+        boolean pitstop = true;
+        for(int i=0;i<30;i++){
+            tempoUltimaVolta = 0;
+            double tempoInicial = nanoTime();
+            tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
+            if(pitstop){
+                if(eventos.pitStop(this)){
+                    tempoUltimaVolta += 0.05;
+                    pitstop = false;
+                }
+            }
+            tempoAcumulado += tempoUltimaVolta;
         }
-        
-        tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
-        tempoAcumulado += tempoUltimaVolta;
     }
-
+    
     public String getIdPiloto() {
         return idPiloto;
     }
@@ -138,8 +143,14 @@ public class Carro implements Runnable{
     public void setTempoUltimaVolta(double tempoUltimaVolta) {
         this.tempoUltimaVolta = tempoUltimaVolta;
     }
-    
-    
+
+    public int getDesgaste() {
+        return desgaste;
+    }
+
+    public void setDesgaste(int desgaste) {
+        this.desgaste = desgaste;
+    }
   
 }
 //ronaldo monobola
