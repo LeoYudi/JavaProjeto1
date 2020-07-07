@@ -19,6 +19,7 @@ public class Carro implements Runnable{
     final int VOLTAS = 10;
     private estado e;
     private int desgaste;
+    private double velocidade;
     
     private Corrida corridaAtual;
     private double tempoAcumulado;
@@ -74,20 +75,20 @@ public class Carro implements Runnable{
         e = estado.fromInteger(1);
         Eventos eventos = new Eventos();
         boolean pitstop = true;
-        tempoUltimaVolta = 0;
-        for(int i=0;i<30;i++){
-            double tempoInicial = nanoTime();
-            tempoUltimaVolta += (nanoTime()-tempoInicial)/100000;
-            if(pitstop){
-                if(eventos.pitStop(this)){
-                    tempoUltimaVolta += 0.05;
-                    pitstop = false;
-                    this.desgaste = 0;
-                }
+        this.velocidade = 200 + Math.random()*100;
+        this.velocidade -= this.desgaste*1.2;
+        tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
+        if(pitstop){
+            if(eventos.pitStop(this)){
+                tempoUltimaVolta += 3.5;
+                pitstop = false;
+                this.desgaste = 0;
             }
-            this.desgaste ++;
-            tempoAcumulado += tempoUltimaVolta + 0.001*this.desgaste;
+            else{
+                this.desgaste += this.corridaAtual.distanciaVolta;
+            }
         }
+        tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
     }
     
     public String getIdPiloto() {
@@ -153,6 +154,14 @@ public class Carro implements Runnable{
     public void setDesgaste(int desgaste) {
         this.desgaste = desgaste;
     }
-  
+
+    public double getVelocidade() {
+        return velocidade;
+    }
+
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
+    }
+   
 }
 //ronaldo monobola

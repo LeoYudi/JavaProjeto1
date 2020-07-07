@@ -29,9 +29,9 @@ public class Eventos {
     }
     
     public boolean pitStop(Carro carro){
-        int x = (int) (Math.random() * 10000);
+        int x = (int) (Math.random() * 100);
         if(x < carro.getDesgaste()){
-            System.out.println(carro.getIdCarro()+" parou no pitstop. Mais 0.05ms");
+            System.out.println(carro.getIdCarro()+" parou no pitstop. Mais 3.5s");
             return true;
         }
         return false;

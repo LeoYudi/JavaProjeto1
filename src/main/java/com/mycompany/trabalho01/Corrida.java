@@ -19,13 +19,14 @@ public class Corrida {
     
     ArrayList<Carro> carros;
     int qtdVoltas;
-    
+    int distanciaVolta;
 
-    public Corrida(String cidade, int qtdVoltas) {
+    public Corrida(String cidade, int qtdVoltas, int distanciaVolta) {
         this.cidade = cidade;
         this.qtdVoltas = qtdVoltas;
         equipes = new ArrayList();
         carros = new ArrayList();
+        this.distanciaVolta = distanciaVolta;
     }
 
     public String getCidade() {

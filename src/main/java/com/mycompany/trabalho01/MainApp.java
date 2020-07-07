@@ -22,7 +22,7 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();*/
-        Corrida corrida = new Corrida("Machado", 5);
+        Corrida corrida = new Corrida("Machado", 5, 8);
         corrida.criarEquipes(2);
         try {
             //corrida.imprimir();
