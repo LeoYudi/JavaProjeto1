@@ -179,7 +179,9 @@ public class Carro implements Runnable{
         if(tempoAcumulado == Double.MAX_VALUE){
             return "Quebrado";
         }
-        else return Double.toString(tempoAcumulado);
+        else {
+            return String.format("%.2f", tempoAcumulado);
+        }
     }
     
     public void resetar(Corrida novaCorrida){
