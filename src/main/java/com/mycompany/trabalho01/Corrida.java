@@ -19,13 +19,14 @@ public class Corrida {
     
     ArrayList<Carro> carros;
     int qtdVoltas;
-    
+    int distanciaVolta;
 
-    public Corrida(String cidade, int qtdVoltas) {
+    public Corrida(String cidade, int qtdVoltas, int distanciaVolta) {
         this.cidade = cidade;
         this.qtdVoltas = qtdVoltas;
         equipes = new ArrayList();
         carros = new ArrayList();
+        this.distanciaVolta = distanciaVolta;
     }
 
     public String getCidade() {
@@ -66,34 +67,6 @@ public class Corrida {
 
     public void setCarros(ArrayList<Carro> carros) {
         this.carros = carros;
-    }
-    
-    //k = número de equipes
-    public void criarEquipes(int k){
-        
-        for(int i=0; i<k; i++){
-            ArrayList<Mecanico> mecanicos = new ArrayList();
-            ArrayList<Engenheiro> engenheiros = new ArrayList();
-            ArrayList<Piloto> pilotos = new ArrayList();
-            Equipe equipe = new Equipe("E"+i);
-            for(int m = 0; m<4;m++){
-                Mecanico mecanico = new Mecanico("E"+i);
-                mecanicos.add(mecanico);
-            }
-            for(int p = 0; p<2;p++){
-                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
-                engenheiros.add(engenheiro);
-                Carro carro = new Carro("E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, this);
-                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,carro,0);
-                carros.add(carro);
-                pilotos.add(piloto);
-            }
-            equipe.setEngenheiros(engenheiros);
-            equipe.setPilotos(pilotos);
-            equipe.setMecanico(mecanicos);
-            this.equipes.add(equipe);
-        }  
-        
     }
     
     public void gerarPosicoesDeLargada(){
