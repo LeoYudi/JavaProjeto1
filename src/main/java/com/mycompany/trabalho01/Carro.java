@@ -170,8 +170,15 @@ public class Carro implements Runnable{
         return velocidade;
     }
 
-    public void setVelocidade(int velocidade) {
+    public void setVelocidade(double velocidade) {
         this.velocidade = velocidade;
+    }
+    
+    public String getStringTempoAcumulado(){
+        if(tempoAcumulado == Double.MAX_VALUE){
+            return "Quebrado";
+        }
+        else return Double.toString(tempoAcumulado);
     }
    
 }
