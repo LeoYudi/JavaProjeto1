@@ -19,6 +19,7 @@ public class Carro implements Runnable{
     final int VOLTAS = 10;
     private estado e;
     private int desgaste;
+    private boolean quebrado;
     
     private Corrida corridaAtual;
     private double tempoAcumulado;
@@ -57,6 +58,7 @@ public class Carro implements Runnable{
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
         this.desgaste = 0;
+        this.quebrado = false;
     }
     
     public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
@@ -66,25 +68,32 @@ public class Carro implements Runnable{
         this.corridaAtual = corridaAtual;
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
+        this.quebrado = false;
     }
     
     //uma volta
     @Override
     public void run() {
-        e = estado.fromInteger(1);
-        Eventos eventos = new Eventos();
-        boolean pitstop = true;
-        for(int i=0;i<30;i++){
-            tempoUltimaVolta = 0;
-            double tempoInicial = nanoTime();
-            tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
-            if(pitstop){
-                if(eventos.pitStop(this)){
+        if(!quebrado){
+            e = estado.fromInteger(1);
+            Eventos eventos = new Eventos();
+            boolean pitstop = true;
+            for(int i=0;i<30;i++){
+                tempoUltimaVolta = 0;
+                double tempoInicial = nanoTime();
+                tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
+                if(eventos.pitStop(this) && pitstop){
                     tempoUltimaVolta += 0.05;
                     pitstop = false;
                 }
+                if(eventos.quebraCarro(this)){
+                    System.out.println("Carro "+idCarro+" quebrou");
+                    quebrado = true;
+                    tempoUltimaVolta = 0;
+                    tempoAcumulado = Double.MAX_VALUE;
+                }
+                tempoAcumulado += tempoUltimaVolta;
             }
-            tempoAcumulado += tempoUltimaVolta;
         }
     }
     

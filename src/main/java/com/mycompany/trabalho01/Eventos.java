@@ -22,10 +22,8 @@ public class Eventos {
     }
     
     public boolean quebraCarro(Carro carro){
-        int x = (int)(Math.random()*1000);
-        if(x == 0)
-            return true;
-        return false;
+        double x = Math.random() * 100;
+        return x < 0.5;
     }
     
     public boolean pitStop(Carro carro){

@@ -138,17 +138,13 @@ public class Corrida {
     
     public void inicia() throws InterruptedException{
         gerarPosicoesDeLargada();
-                
-        Thread[] threads = new Thread[carros.size()];
         
         for(int volta = 0; volta < qtdVoltas; volta++){
+            ArrayList<Thread> threads = new ArrayList<>();
             
             for (int i = 0; i < carros.size(); i++) {
-                threads[i] = new Thread(carros.get(i));
-            }
-            
-            for (int i = 0; i < carros.size(); i++) {
-                threads[i].start();
+                threads.add(new Thread(carros.get(i)));
+                threads.get(i).start();
             }
             
             for (Thread thread : threads) {
