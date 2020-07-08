@@ -205,7 +205,14 @@ public class Carro implements Runnable{
     public void setVoltaCorrida(int voltaCorrida) {
         this.voltaCorrida = voltaCorrida;
     }
-    
+
+    public boolean isQuebrado() {
+        return quebrado;
+    }
+
+    public void setQuebrado(boolean quebrado) {
+        this.quebrado = quebrado;
+    }    
     
     public String getStringTempoAcumulado(){
         if(tempoAcumulado == Double.MAX_VALUE)
