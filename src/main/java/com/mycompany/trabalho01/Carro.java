@@ -79,12 +79,12 @@ public class Carro implements Runnable{
             e = estado.fromInteger(1);
             Eventos eventos = new Eventos();
             boolean pitstop = true;
-            this.velocidade = 200 + Math.random()*100;
+            this.velocidade = 230 + Math.random()*20;
             this.velocidade -= this.desgaste*1.2;
             tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
             if(pitstop){
                 if(eventos.pitStop(this)){
-                    tempoUltimaVolta += 3.5;
+                    tempoUltimaVolta += 0.33;
                     pitstop = false;
                     this.desgaste = 0;
                 }
@@ -93,7 +93,7 @@ public class Carro implements Runnable{
                 }
             }
             if(eventos.quebraCarro(this)){
-                System.out.println("Carro "+idCarro+" quebrou");
+                System.err.println("Carro "+idCarro+" quebrou");
                 quebrado = true;
                 tempoUltimaVolta = 0;
                 tempoAcumulado = Double.MAX_VALUE;
