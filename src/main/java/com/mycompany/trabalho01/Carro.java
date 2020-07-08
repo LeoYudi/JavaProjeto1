@@ -5,7 +5,19 @@
  */
 package com.mycompany.trabalho01;
 
+import com.mycompany.trabalho01.Corrida;
 import static java.lang.System.nanoTime;
+
+/**
+ *
+ * @author rebeca
+ */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 
 /**
  *
@@ -18,7 +30,10 @@ public class Carro implements Runnable{
     private int comb;
     final int VOLTAS = 10;
     private estado e;
-    
+    private int desgaste;
+    private double velocidade;
+    private int voltaCorrida;
+    private double chuva =1;
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
@@ -55,6 +70,7 @@ public class Carro implements Runnable{
         this.posicao = posicao;
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
+        this.desgaste = 0;
     }
     
     public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
@@ -69,20 +85,26 @@ public class Carro implements Runnable{
     //uma volta
     @Override
     public void run() {
-        int x = (int) (Math.random() * 100); //entre 0 e 100
         e = estado.fromInteger(1);
-        tempoUltimaVolta = 0;
-        double tempoInicial = nanoTime();
-        
-        if(x % 2 == 0){
-            System.out.println(idCarro+" parou pra trocar pneu. Mais 0.05ms");
-            tempoUltimaVolta += 0.05;
+        Eventos eventos = new Eventos();
+        boolean pitstop = true;
+        this.velocidade = (200 + Math.random()*100)*chuva;
+        if(chuva!=1) chuva=1;
+        this.velocidade -= this.desgaste*1.2;
+        tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
+        if(pitstop){
+            if(eventos.pitStop(this)){
+                tempoUltimaVolta += 3.5;
+                pitstop = false;
+                this.desgaste = 0;
+            }
+            else{
+                this.desgaste += this.corridaAtual.distanciaVolta;
+            }
         }
-        
-        tempoUltimaVolta += (nanoTime()-tempoInicial)/1000000;
-        tempoAcumulado += tempoUltimaVolta;
+        tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
     }
-
+    
     public String getIdPiloto() {
         return idPiloto;
     }
@@ -138,8 +160,38 @@ public class Carro implements Runnable{
     public void setTempoUltimaVolta(double tempoUltimaVolta) {
         this.tempoUltimaVolta = tempoUltimaVolta;
     }
+
+    public int getDesgaste() {
+        return desgaste;
+    }
+
+    public void setDesgaste(int desgaste) {
+        this.desgaste = desgaste;
+    }
+
+    public double getVelocidade() {
+        return velocidade;
+    }
+
+    public void setVelocidade(double velocidade) {
+        this.velocidade = velocidade;
+    }
+
+    public double getChuva() {
+        return chuva;
+    }
+
+    public void setChuva(double chuva) {
+        this.chuva = chuva;
+    }
+
+    public int getVoltaCorrida() {
+        return voltaCorrida;
+    }
+
+    public void setVoltaCorrida(int voltaCorrida) {
+        this.voltaCorrida = voltaCorrida;
+    }
     
-    
-  
 }
 //ronaldo monobola
