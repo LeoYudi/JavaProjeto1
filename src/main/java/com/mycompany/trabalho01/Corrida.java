@@ -74,34 +74,6 @@ public class Corrida {
         this.carros = carros;
     }
     
-    //k = número de equipes
-    public void criarEquipes(int k){
-        
-        for(int i=0; i<k; i++){
-            ArrayList<Mecanico> mecanicos = new ArrayList();
-            ArrayList<Engenheiro> engenheiros = new ArrayList();
-            ArrayList<Piloto> pilotos = new ArrayList();
-            Equipe equipe = new Equipe("E"+i);
-            for(int m = 0; m<4;m++){
-                Mecanico mecanico = new Mecanico("E"+i);
-                mecanicos.add(mecanico);
-            }
-            for(int p = 0; p<2;p++){
-                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
-                engenheiros.add(engenheiro);
-                Carro carro = new Carro("E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, this);
-                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,carro,0);
-                carros.add(carro);
-                pilotos.add(piloto);
-            }
-            equipe.setEngenheiros(engenheiros);
-            equipe.setPilotos(pilotos);
-            equipe.setMecanico(mecanicos);
-            this.equipes.add(equipe);
-        }  
-        
-    }
-    
     public void gerarPosicoesDeLargada(){
         ArrayList<Integer> posicoes = new ArrayList<>();
         
@@ -147,19 +119,14 @@ public class Corrida {
         gerarPosicoesDeLargada();
         Timer time = new Timer(); 
         Random random = new Random();
-        Thread[] threads = new Thread[carros.size()];
-        
         final int tempoChuva = random.nextInt(20);
-        
         for(int volta = 0; volta < qtdVoltas; volta++){
-            
+            ArrayList<Thread> threads = new ArrayList<>();
+
             for (int i = 0; i < carros.size(); i++) {
-                threads[i] = new Thread(carros.get(i));
-            }
-            
-            for (int i = 0; i < carros.size(); i++) {
-                threads[i].start();
                 carros.get(i).setVoltaCorrida(volta);
+                threads.add(new Thread(carros.get(i)));
+                threads.get(i).start();
             }
             
             for (Thread thread : threads) {
@@ -191,6 +158,7 @@ public class Corrida {
         for (Carro carro : carros) {
             System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
             System.out.println(" Volta: "+carro.getVoltaCorrida());
+            System.out.printf("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao());
         }
     }
     
@@ -207,7 +175,7 @@ public class Corrida {
         for(Carro c: carros){
             c.setChuva(porcentagem);
         }
-        System.out.printf("Chuva reduz velocidade em %.4f \n", porcentagem*100);
+        System.out.printf("Chuva reduz velocidade em %.4f\n", porcentagem*100);
     }
     
     public boolean acidente(){

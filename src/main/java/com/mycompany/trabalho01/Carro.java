@@ -31,9 +31,10 @@ public class Carro implements Runnable{
     final int VOLTAS = 10;
     private estado e;
     private int desgaste;
-    private double velocidade;
     private int voltaCorrida;
-    private double chuva =1;
+    private double chuva =0;
+    private boolean quebrado;
+    private double velocidade;
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
@@ -71,6 +72,7 @@ public class Carro implements Runnable{
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
         this.desgaste = 0;
+        this.quebrado = false;
     }
     
     public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
@@ -80,29 +82,40 @@ public class Carro implements Runnable{
         this.corridaAtual = corridaAtual;
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
+        this.quebrado = false;
     }
     
     //uma volta
     @Override
     public void run() {
-        e = estado.fromInteger(1);
-        Eventos eventos = new Eventos();
-        boolean pitstop = true;
-        this.velocidade = (200 + Math.random()*100)*chuva;
-        if(chuva!=1) chuva=1;
-        this.velocidade -= this.desgaste*1.2;
-        tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
-        if(pitstop){
-            if(eventos.pitStop(this)){
-                tempoUltimaVolta += 3.5;
-                pitstop = false;
-                this.desgaste = 0;
+        
+        if(!quebrado){
+            e = estado.fromInteger(1);
+            Eventos eventos = new Eventos();
+            boolean pitstop = true;
+            this.velocidade = 230 + Math.random()*20;
+            this.velocidade -= this.velocidade*chuva;
+            this.velocidade -= this.desgaste*1.2;
+            tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
+            if(pitstop){
+                if(eventos.pitStop(this)){
+                    tempoUltimaVolta += 0.33;
+                    pitstop = false;
+                    this.desgaste = 0;
+                }
+                else{
+                    this.desgaste += this.corridaAtual.distanciaVolta;
+                }
             }
-            else{
-                this.desgaste += this.corridaAtual.distanciaVolta;
+            if(eventos.quebraCarro(this)){
+                System.err.println("Carro "+idCarro+" quebrou");
+                quebrado = true;
+                tempoUltimaVolta = 0;
+                tempoAcumulado = Double.MAX_VALUE;
+                desgaste = 0;
             }
+            tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
         }
-        tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
     }
     
     public String getIdPiloto() {
@@ -193,5 +206,32 @@ public class Carro implements Runnable{
         this.voltaCorrida = voltaCorrida;
     }
     
+    
+    public String getStringTempoAcumulado(){
+        if(tempoAcumulado == Double.MAX_VALUE)
+            return "Quebrado";
+        else 
+            return minutesToTime(tempoAcumulado);
+    }
+    
+    public String minutesToTime(double minutes){
+        String[] aux = String.format("%.6f", minutes).split(",");
+        int parteInteira = Integer.parseInt(aux[0]);
+        int parteDecimal = Integer.parseInt(aux[1]);
+        
+        int hora = (int) (parteInteira / 60);
+        int minuto = (int) (parteInteira % 60);
+        int segundo = (int) (parteDecimal * 60 / 1000000); //assumindo 6 casas decimais
+        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
+    }
+    
+    public void resetar(Corrida novaCorrida){
+        this.corridaAtual = novaCorrida;
+        this.quebrado = false;
+        this.tempoAcumulado = 0;
+        this.tempoUltimaVolta = 0;
+        this.desgaste = 0;
+        this.e = estado.fromInteger(0);
+    }
+   
 }
-//ronaldo monobola
