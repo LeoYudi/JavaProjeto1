@@ -176,29 +176,21 @@ public class Carro implements Runnable{
     }
     
     public String getStringTempoAcumulado(){
-        if(tempoAcumulado == Double.MAX_VALUE){
+        if(tempoAcumulado == Double.MAX_VALUE)
             return "Quebrado";
-        }
-        else {
-            return String.format("%f", tempoAcumulado);
-        }
-    }
-    
-    public String secondsToTime(long seconds){
-        int hora = (int) (seconds / 3600);
-        int minuto = (int) ((seconds % 3600) / 60);
-        int segundo = (int) (seconds % 60);
-        
-        String tempo = String.format("%02d:%02d:%02d", hora, minuto, segundo);
-        return tempo;
+        else 
+            return minutesToTime(tempoAcumulado);
     }
     
     public String minutesToTime(double minutes){
-        String str = "";
+        String[] aux = String.format("%.6f", minutes).split(",");
+        int parteInteira = Integer.parseInt(aux[0]);
+        int parteDecimal = Integer.parseInt(aux[1]);
         
-        int hora = (int) minutes/60;
-        int minutos = (int) minutes%60;
-        return str;
+        int hora = (int) (parteInteira / 60);
+        int minuto = (int) (parteInteira % 60);
+        int segundo = (int) (parteDecimal * 60 / 1000000); //assumindo 6 casas decimais
+        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
     }
     
     public void resetar(Corrida novaCorrida){
