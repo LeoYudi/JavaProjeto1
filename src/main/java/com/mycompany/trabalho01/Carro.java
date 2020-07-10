@@ -41,7 +41,7 @@ public class Carro implements Runnable{
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
-        
+           StringBuffer log;
     public enum estado{
         PARADO("Parado"),
         CORRENDO("Correndo"),
@@ -78,6 +78,7 @@ public class Carro implements Runnable{
         this.quebrado = false;
         this.chuva = false;
         this.acidente = false;
+        this.log = new StringBuffer();
     }
     
     public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
@@ -90,7 +91,7 @@ public class Carro implements Runnable{
         this.quebrado = false;
         this.chuva = false;
         this.acidente = false;
-        
+        this.log = new StringBuffer();
     }
     
     //uma volta
@@ -272,6 +273,8 @@ public class Carro implements Runnable{
             reduzVelocidade(porcentagem);
             String aux = "Chuva--> "+idCarro+ " velocidade reduzida em "+df.format(porcentagem*100)+ "%";
             System.out.println(aux);
+            log.append(aux);
+            log.append("\n");
         }
         chuva = false;
     }
@@ -285,7 +288,9 @@ public class Carro implements Runnable{
             pitStop();
             if(eventos.quebraCarro(this)){
                 quebrar();
-                System.out.println("Carro " +idCarro+ " quebrou no acidente posicao: "+posicao);
+               String aux = "Carro " +idCarro+ " quebrou no acidente posicao: "+posicao;
+               log.append(aux);
+               log.append("\n");
             }
         acidente = false;
     }
@@ -302,6 +307,21 @@ public class Carro implements Runnable{
         tempoUltimaVolta += 0.33;
         pitstop = false;
         this.desgaste = 0;
-        if(acidente) System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
+        if(acidente) {
+            System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
+            String aux = "ACIDENTE> carro " + idCarro+ " em pitStop";
+            log.append(aux);
+            log.append("\n");
+        }
     }
+
+    public StringBuffer getLog() {
+        return log;
+    }
+
+    public void setLog(StringBuffer log) {
+        this.log = log;
+    }
+    
+    
 }

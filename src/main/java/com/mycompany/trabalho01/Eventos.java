@@ -5,6 +5,7 @@
  */
 package com.mycompany.trabalho01;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -16,8 +17,23 @@ public class Eventos {
     
     
     
-    public int randomTempo(){
+   /* public int randomTempo(){
         return 10 + (int) Math.random();
+    }*/
+    
+    public int randomVolta(int voltas){
+        Random random = new Random();
+        return random.nextInt(voltas);
+    }
+    
+    public ArrayList<Integer> randomVetor(int quantVoltas, int voltasTotais){
+        Random intRandom = new Random ();
+        ArrayList<Integer> random = new ArrayList<Integer>();
+        for(int i = 0; i< quantVoltas; i++){
+            random.add(intRandom.nextInt(voltasTotais));
+        }
+        
+        return random;
     }
     
     public boolean chuva(){

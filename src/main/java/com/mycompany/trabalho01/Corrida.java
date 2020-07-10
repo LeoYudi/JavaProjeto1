@@ -153,17 +153,19 @@ public class Corrida {
     public void inicia() throws InterruptedException{
         gerarPosicoesDeLargada();
         atualizarPosicaoDepoisDaVolta();
+        log.append("\n");
         
-        final Timer time = new Timer(); 
-        final Timer time1 = new Timer();
-        final Timer time2 = new Timer();
+        int voltaChuva = eventos.randomVolta(qtdVoltas-2);
+        int voltaAcidente = eventos.randomVolta(qtdVoltas-2);
+        while (voltaChuva== voltaAcidente) voltaAcidente = eventos.randomVolta(qtdVoltas-2);
         
-        final double tempoChuva = eventos.randomTempo();
-        final double tempoAcidente = eventos.randomTempo();
+        System.out.println("Volta que pode ocorrer chuva>>" +(voltaChuva+2)); System.out.println("Volta que pode ocorrer acidentede>>"+(voltaAcidente+2));
         
         for(int volta = 0; volta < qtdVoltas; volta++){
+            String str = "Volta" + (volta+1) + "\n";
+            log.append(str);
             ArrayList<Thread> threads = new ArrayList<>();
-            System.out.println("VOLTA>>>> "+volta);
+
             for (int i = 0; i < carros.size(); i++) {
                 threads.add(new Thread(carros.get(i)));
                 threads.get(i).start();
@@ -172,65 +174,32 @@ public class Corrida {
             for (Thread thread : threads) {
                 thread.join(); 
             } 
+                
+            if(volta == voltaChuva){
+                log.append("Chuva volta: "+volta);
+                log.append("\n");
+                chuva();
+            }
+            else if(volta == voltaAcidente) {
+                log.append("Acidente volta: "+volta);
+                acidenteCarros();
+            }
             
-            String str = "Volta" + (volta+1) + "\n";
-            log.append(str);
+            
             atualizarPosicaoDepoisDaVolta();
             log.append("\n");
-
-            Thread atualizaPosicao = new Thread(new Runnable(){
-                public void run(){    
-                    time.scheduleAtFixedRate(new TimerTask(){
-                        public void run (){
-                            atualizarPosicaoDepoisDaVolta();
-                        }
-                    }, 0, 15);
-                }
-             //posições a cada 2 ms
-            });
-            
-            
-            Thread chover =new Thread(new Runnable(){
-                public void run(){
-                    time1.scheduleAtFixedRate(new TimerTask(){
-                        public void run (){
-                            chuva();
-                        }
-                    }, 0, (long) tempoChuva); 
-                }
-            });            
-          
-            Thread acidente =new Thread(new Runnable(){
-                public void run(){
-                    time2.scheduleAtFixedRate(new TimerTask(){
-                        public void run(){
-                            acidenteCarros();        
-                        }
-                    }, 5, (long) tempoAcidente);
-                }
-            });
-            //
-            
-            atualizaPosicao.start();
-            atualizaPosicao.join();
-            chover.start();
-            chover.join();
-            acidente.start();
-            acidente.join();
             
         }      
-        time.cancel();
-        time1.cancel();
-        time2.cancel();
         String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
         System.err.print(aux);
+        //log.append(aux);
     }
     
     public void imprimirCarrosEmOrdem(){
         for (Carro carro : carros) {
             log.append(String.format("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao()));
-            System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
-            System.out.println(" Volta: "+carro.getVoltaCorrida());
+          //  System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
+         //   System.out.println(" Volta: "+carro.getVoltaCorrida());
             System.out.printf("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao());
         }
     }
@@ -242,11 +211,12 @@ public class Corrida {
     }
     
     public void chuva(){
-        if(eventos.chuva()){
+        if(true){
             chuva = true;
             synchronized (carros){
                 for(Carro carro: carros){
                     carro.setChuva(chuva);
+                    carro.setLog(log);
                 }
             }
         }
@@ -262,7 +232,7 @@ public class Corrida {
     }
     
     public void acidenteCarros(){
-        if(eventos.acidente()){
+        if(true){
             System.out.println("ACIDENTE");
             Random random = new Random();
             
@@ -276,6 +246,7 @@ public class Corrida {
             synchronized (carros){ 
                 while(i<quantCarrosEnvolvidos){
                     carros.get(posicao+i).setAcidente(true);
+                    carros.get(posicao+i).setLog(log);
                     System.out.println("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro());
                     i++;
                 }
