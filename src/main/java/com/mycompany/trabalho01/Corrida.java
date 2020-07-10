@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -18,7 +19,7 @@ import java.util.TimerTask;
  */
 public class Corrida {
     String nomeGP;
-    String pais;
+    String cidade;
     ArrayList<Equipe> equipes;
     Eventos eventos;
     boolean run = true;
@@ -27,13 +28,16 @@ public class Corrida {
     int distanciaVolta;
     boolean chuva = false;
     
-    public Corrida(String pais, String cidade, int qtdVoltas, int distanciaVolta) {
-        this.nomeGP = cidade;
-        this.pais = pais;
+    StringBuffer log;
+    
+    public Corrida(String nomeGP, String cidade, int qtdVoltas, int distanciaVolta) {
+        this.nomeGP = nomeGP;
+        this.cidade = cidade;
         this.qtdVoltas = qtdVoltas;
         equipes = new ArrayList();
         carros = new ArrayList();
         this.distanciaVolta = distanciaVolta;
+        log = new StringBuffer();
     }
 
     public String getNomeGP() {
@@ -44,12 +48,12 @@ public class Corrida {
         this.nomeGP = nomeGP;
     }
 
-    public String getPais() {
-        return pais;
+    public String getCidade() {
+        return cidade;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public int getQtdVoltas() {
@@ -90,6 +94,18 @@ public class Corrida {
 
     public void setDistanciaVolta(int distanciaVolta) {
         this.distanciaVolta = distanciaVolta;
+    }
+
+    public String getLog() {
+        return log.toString();
+    }
+
+    public void setLog(StringBuffer log) {
+        this.log = log;
+    }
+    
+    public void appendLog(String str){
+        log.append(str);
     }
     
     public void gerarPosicoesDeLargada(){
@@ -151,21 +167,26 @@ public class Corrida {
                 thread.join();
             }
             
-            TimerTask tempo = new TimerTask(){
-                public void run (){
-                    if(run) atualizarPosicaoDepoisDaVolta();
-                }
-            };
-            time.scheduleAtFixedRate(tempo, 0, 10); //posições a cada 10 ms
+            String str = "Volta" + (volta+1) + "\n";
+            log.append(str);
+            atualizarPosicaoDepoisDaVolta();
+            log.append("\n");
             
-            TimerTask choveu = new TimerTask(){
-                public void run (){
-                    if(!chuva) {
-                       chuva(tempoChuva);
-                    }
-                }
-            };
-            time.scheduleAtFixedRate(choveu, 0, tempoChuva);
+//            TimerTask tempo = new TimerTask(){
+//                public void run (){
+//                    if(run) atualizarPosicaoDepoisDaVolta();
+//                }
+//            };
+//            time.scheduleAtFixedRate(tempo, 0, 10); //posições a cada 10 ms
+            
+//            TimerTask choveu = new TimerTask(){
+//                public void run (){
+//                    if(!chuva) {
+//                       chuva(tempoChuva);
+//                    }
+//                }
+//            };
+//            time.scheduleAtFixedRate(choveu, 0, tempoChuva);
             
         }
         
@@ -174,6 +195,7 @@ public class Corrida {
     
     public void imprimirCarrosEmOrdem(){
         for (Carro carro : carros) {
+            log.append(String.format("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao()));
             System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
             System.out.println(" Volta: "+carro.getVoltaCorrida());
             System.out.printf("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao());
@@ -193,7 +215,7 @@ public class Corrida {
         for(Carro c: carros){
             c.setChuva(porcentagem);
         }
-        System.out.printf("Chuva reduz velocidade em %.4f\n", porcentagem*100);
+        log.append(String.format("Chuva reduz velocidade em %.4f\n", porcentagem*100));
     }
     
     public boolean acidente(){

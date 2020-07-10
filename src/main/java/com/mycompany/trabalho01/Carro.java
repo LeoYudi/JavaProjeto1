@@ -7,6 +7,7 @@ package com.mycompany.trabalho01;
 
 import com.mycompany.trabalho01.Corrida;
 import static java.lang.System.nanoTime;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -38,7 +39,7 @@ public class Carro implements Runnable{
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
-    
+        
     public enum estado{
         PARADO("Parado"),
         CORRENDO("Correndo"),
@@ -99,6 +100,7 @@ public class Carro implements Runnable{
             tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
             if(pitstop){
                 if(eventos.pitStop(this)){
+                    corridaAtual.appendLog(idCarro+" parou no pitstop. Mais 20s\n");
                     tempoUltimaVolta += 0.33;
                     pitstop = false;
                     this.desgaste = 0;
@@ -108,7 +110,7 @@ public class Carro implements Runnable{
                 }
             }
             if(eventos.quebraCarro(this)){
-                System.err.println("Carro "+idCarro+" quebrou");
+                corridaAtual.appendLog(idCarro+" quebrou\n");
                 quebrado = true;
                 tempoUltimaVolta = 0;
                 tempoAcumulado = Double.MAX_VALUE;
@@ -212,8 +214,8 @@ public class Carro implements Runnable{
 
     public void setQuebrado(boolean quebrado) {
         this.quebrado = quebrado;
-    }    
-    
+    }
+
     public String getStringTempoAcumulado(){
         if(tempoAcumulado == Double.MAX_VALUE)
             return "Quebrado";
