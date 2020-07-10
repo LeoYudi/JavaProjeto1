@@ -174,20 +174,18 @@ public class Corrida {
             //
             
             atualizaPosicao.start();
-            //atualizaPosicao.join();
+            atualizaPosicao.join();
             chover.start();
             chover.join();
             acidente.start();
             acidente.join();
             
-            if(volta==qtdVoltas-1){
-                time.cancel();
-                time1.cancel();
-                time2.cancel();
-                String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
-                System.err.print(aux);
-            }
         }      
+        time.cancel();
+        time1.cancel();
+        time2.cancel();
+        String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
+        System.err.print(aux);
     }
     
     public void imprimirCarrosEmOrdem(){
