@@ -19,6 +19,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     ArrayList<Carro> carros;
     ArrayList<Equipe> equipes;
     ArrayList<Corrida> corridas;
+    Temporada temporada;
     
     int qtdCorridasFinalizadas;
     
@@ -29,13 +30,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.carros = new ArrayList();
         this.equipes = new ArrayList();
         this.corridas = new ArrayList();
-        
-        Corrida corrida = new Corrida("GP do Brasil", "Machado", 20, 8);
-        corrida.setCarros(carros);
-        corrida.setEquipes(equipes);
-        this.corridas.add(corrida);
-        
         criarEquipes(2);
+
+        corridas.add(new Corrida("GP do Brasil", "Machado", 20, 8));
+        corridas.add(new Corrida("GP da Alemanha", "Berlim", 30, 10));
+        corridas.add(new Corrida("GP da Argentina", "Buenos Aires", 20, 8));
+
+        for(Corrida corrida: corridas){
+            corrida.setCarros(carros);
+            corrida.setEquipes(equipes);
+        }
+
+        temporada = new Temporada(corridas, carros);
         
         jPanel1.setVisible(false);
         jPanel2.setVisible(false);
@@ -55,9 +61,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             for(int p = 0; p<2;p++){
                 Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
                 engenheiros.add(engenheiro);
-                Carro carro;
-                carro = new Carro("E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, null);
-                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,carro,0);
+                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,"E"+i+"Carro"+p);
+                Carro carro = new Carro(piloto, "E"+i+"Carro"+p, i, null);
                 this.carros.add(carro);
                 pilotos.add(piloto);
             }
@@ -72,17 +77,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     Inicia somente uma corrida e incrementa a quantidade de corridas finalizadas
     */
     private void iniciarCorrida() throws InterruptedException{
-        if(qtdCorridasFinalizadas == corridas.size()) return; //todas as corridas já ocorreram
-        
-        int i = qtdCorridasFinalizadas;
-        for(int j=0;j<this.carros.size();j++){
-            carros.get(j).setCorridaAtual(corridas.get(i));
-        }
-        corridas.get(i).inicia();
-        String log = corridas.get(i).getLog();
-        System.out.println(log);
+        logCorridaTextArea.setText("");
+        String log = temporada.iniciarProximaCorrida();
         logCorridaTextArea.setText(log);
-        qtdCorridasFinalizadas++;
+        System.out.println(temporada.colocacaoFinal());
     }
     
     @SuppressWarnings("unchecked")
@@ -365,9 +363,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void opIniciarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opIniciarCorridaActionPerformed
         iniciarCorridaPanel.setVisible(true);
         
-        if(qtdCorridasFinalizadas < corridas.size()){
-            Corrida corridaAtual = corridas.get(qtdCorridasFinalizadas);
+        if(!temporada.terminou()){
+            Corrida corridaAtual = corridas.get(temporada.getQtdCorridasTerminadas());
+            System.out.println("CORRIDA: "+temporada.getQtdCorridasTerminadas());
             nomeGPLabel.setText(corridaAtual.getNomeGP());
+            nomeGPLabel.paintImmediately(nomeGPLabel.getVisibleRect());
             cidadeGPLabel.setText("Cidade: " + corridaAtual.getCidade());
             qtdVoltasLabel.setText("Quantidade de voltas: " + corridaAtual.getQtdVoltas());
             kmPorVoltaLabel.setText("Km por volta: " + corridaAtual.getDistanciaVolta());

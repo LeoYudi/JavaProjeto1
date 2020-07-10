@@ -257,6 +257,7 @@ public class Corrida {
             int quantCarrosQuebrados = carrosQuebrados();
             int posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
             posicao++;
+            log.append(String.format("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos+"\n"));
             System.out.println("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos);
            
             int i=0;
@@ -264,6 +265,7 @@ public class Corrida {
                 while(i<quantCarrosEnvolvidos){
                     carros.get(posicao+i).setAcidente(true);
                     carros.get(posicao+i).setLog(log);
+                    log.append(String.format("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro()+"\n"));
                     System.out.println("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro());
                     i++;
                 }
