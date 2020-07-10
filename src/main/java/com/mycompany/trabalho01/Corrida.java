@@ -17,7 +17,7 @@ import java.util.TimerTask;
  * @author rebeca
  */
 public class Corrida {
-    String cidade;
+    String nomeGP;
     String pais;
     ArrayList<Equipe> equipes;
     Eventos eventos;
@@ -28,7 +28,7 @@ public class Corrida {
     boolean chuva = false;
     
     public Corrida(String pais, String cidade, int qtdVoltas, int distanciaVolta) {
-        this.cidade = cidade;
+        this.nomeGP = cidade;
         this.pais = pais;
         this.qtdVoltas = qtdVoltas;
         equipes = new ArrayList();
@@ -36,12 +36,12 @@ public class Corrida {
         this.distanciaVolta = distanciaVolta;
     }
 
-    public String getCidade() {
-        return cidade;
+    public String getNomeGP() {
+        return nomeGP;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setNomeGP(String nomeGP) {
+        this.nomeGP = nomeGP;
     }
 
     public String getPais() {
