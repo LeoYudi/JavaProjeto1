@@ -29,27 +29,10 @@ public class MainApp extends Application {
         stage.setScene(scene);
         stage.show();*/
         
-        this.carros = new ArrayList();
-        this.equipes = new ArrayList();
-        this.corridas = new ArrayList();
+        TelaPrincipal tela = new TelaPrincipal();
+        tela.setVisible(true);
         
-        Corrida corrida = new Corrida("Machado", 20, 8);
-        corrida.setCarros(carros);
-        corrida.setEquipes(equipes);
-        this.corridas.add(corrida);
         
-        criarEquipes(2);
-        try {
-            //corrida.imprimir();
-            for(int i=0;i<corridas.size();i++){
-                for(int j=0;j<this.carros.size();j++){
-                    carros.get(j).setCorridaAtual(corridas.get(i));
-                }
-                corridas.get(i).inicia();
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
