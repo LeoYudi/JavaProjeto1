@@ -253,9 +253,9 @@ public class Corrida {
             System.out.println("ACIDENTE");
             Random random = new Random();
             
-            int quantCarrosEnvolvidos = eventos.quantCarrosAcidente(carros.size()+1);
+            int quantCarrosEnvolvidos = eventos.quantCarrosAcidente(carros.size());
             int quantCarrosQuebrados = carrosQuebrados();
-            int posicao = random.nextInt(carros.size()+1 - quantCarrosQuebrados - quantCarrosEnvolvidos);
+            int posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
             posicao++;
             System.out.println("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos);
            
