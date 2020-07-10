@@ -60,9 +60,8 @@ public class MainApp extends Application {
             for(int p = 0; p<2;p++){
                 Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
                 engenheiros.add(engenheiro);
-                Carro carro;
-                carro = new Carro("E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, null);
-                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,carro,0);
+                Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,"E"+i+"Carro"+p);
+                Carro carro = new Carro(piloto, "E"+i+"Carro"+p, i, null);
                 this.carros.add(carro);
                 pilotos.add(piloto);
             }

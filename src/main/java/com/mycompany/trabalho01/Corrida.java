@@ -27,8 +27,9 @@ public class Corrida {
     int qtdVoltas;
     int distanciaVolta;
     boolean chuva = false;
-    
     StringBuffer log;
+    int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
+                                                                //a partir do décimo não ganha ponto
     
     public Corrida(String nomeGP, String cidade, int qtdVoltas, int distanciaVolta) {
         this.nomeGP = nomeGP;
@@ -176,12 +177,12 @@ public class Corrida {
             } 
                 
             if(volta == voltaChuva){
-                log.append("Chuva volta: "+volta);
+                log.append(String.format("Chuva volta: "+volta));
                 log.append("\n");
                 chuva();
             }
             else if(volta == voltaAcidente) {
-                log.append("Acidente volta: "+volta);
+                log.append(String.format("Acidente volta: "+volta));
                 acidenteCarros();
             }
             
@@ -189,10 +190,26 @@ public class Corrida {
             atualizarPosicaoDepoisDaVolta();
             log.append("\n");
             
-        }      
+        }
+        
+        atribuirPontuacao();
         String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
         System.err.print(aux);
         //log.append(aux);
+    }
+    
+    /*
+    Adiciona a pontuação e a colocação final no piloto. Note que regraPontuacao.length é 10, 
+    então só os primeiros dez carros pontuarão. A partir da 11ª colocação, a pontuação é 0
+    */
+    public void atribuirPontuacao(){
+        for(int i = 0; i < carros.size(); i++){
+            Piloto piloto = carros.get(i).getPiloto();
+            if(i < regraPontuacao.length)
+                piloto.addResultado(regraPontuacao[i], i + 1);
+            else
+                piloto.addResultado(0, i + 1);
+        }        
     }
     
     public void imprimirCarrosEmOrdem(){

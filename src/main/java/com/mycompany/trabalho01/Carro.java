@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
  * @author rebeca
  */
 public class Carro implements Runnable{
-    private String idPiloto;
+    private Piloto piloto;
     private String idCarro;
     private int posicao;
     private int comb;
@@ -41,7 +41,7 @@ public class Carro implements Runnable{
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
-           StringBuffer log;
+    StringBuffer log;
     public enum estado{
         PARADO("Parado"),
         CORRENDO("Correndo"),
@@ -68,8 +68,8 @@ public class Carro implements Runnable{
         }      
     }
     
-    public Carro(String idPiloto, String id, int posicao) {   
-        this.idPiloto = idPiloto;
+    public Carro(Piloto piloto, String id, int posicao) {   
+        this.piloto = piloto;
         this.idCarro = id;
         this.posicao = posicao;
         e = estado.fromInteger(0);
@@ -81,8 +81,8 @@ public class Carro implements Runnable{
         this.log = new StringBuffer();
     }
     
-    public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
-        this.idPiloto = idPiloto;
+    public Carro(Piloto piloto, String id, int posicao, Corrida corridaAtual) {   
+        this.piloto = piloto;
         this.idCarro = id;
         this.posicao = posicao;
         this.corridaAtual = corridaAtual;
@@ -125,12 +125,12 @@ public class Carro implements Runnable{
         }
     }
     
-    public String getIdPiloto() {
-        return idPiloto;
+    public Piloto getPiloto() {
+        return piloto;
     }
 
-    public void setIdPiloto(String idPiloto) {
-        this.idPiloto = idPiloto;
+    public void setPiloto(Piloto piloto) {
+        this.piloto = piloto;
     }
 
     public String getIdCarro() {

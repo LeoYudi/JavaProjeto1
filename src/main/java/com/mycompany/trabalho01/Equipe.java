@@ -58,8 +58,17 @@ public class Equipe {
         this.mecanicos = mecanicos;
     }
 
+    /*
+    Faz o somatório dos pontos de todos os pilotos da equipe
+    */
     public int getPontosTotal() {
-        return pontosTotal;
+        int pontos = 0;
+        
+        for(Piloto piloto: pilotos){
+            pontos += piloto.getPontuacaoTotal();
+        }
+        
+        return pontos;
     }
 
     public void setPontosTotal(int pontosTotal) {
