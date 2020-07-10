@@ -5,6 +5,8 @@
  */
 package com.mycompany.trabalho01;
 
+import java.util.Random;
+
 /**
  *
  * @author rebeca
@@ -13,12 +15,31 @@ public class Eventos {
     private int num;
     
     
-    public void chuva(){
-        
+    
+    public int randomTempo(){
+        return 10 + (int) Math.random();
     }
     
-    public void acidente(){
-        
+    public boolean chuva(){
+        double x = Math.random() * 100;
+        return x < 0.5;
+    }
+    
+    public boolean acidente(){
+        double x = Math.random() * 100;
+        return x < 0.3;
+    }
+    
+    public int quantCarrosAcidente(int quantCarros){
+        double x = Math.random();
+        Random r = new Random();
+        int y = r.nextInt();
+        if(x < 0.8) return 2;
+        else if(x>=0.8 && x<0.9) return 3;
+        else if(x>= 0.9 && x <= 0.97) return 4;
+        //else while(y<4 || y>20) y = r.nextInt(); 
+        //return y;
+        else return 4+r.nextInt(quantCarros-4);
     }
     
     public boolean quebraCarro(Carro carro){

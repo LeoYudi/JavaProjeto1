@@ -38,6 +38,7 @@ public class Corrida {
         carros = new ArrayList();
         this.distanciaVolta = distanciaVolta;
         log = new StringBuffer();
+        eventos = new Eventos();
     }
 
     public String getNomeGP() {
@@ -151,46 +152,78 @@ public class Corrida {
     
     public void inicia() throws InterruptedException{
         gerarPosicoesDeLargada();
-        Timer time = new Timer(); 
-        Random random = new Random();
-        final int tempoChuva = random.nextInt(20);
+        atualizarPosicaoDepoisDaVolta();
+        
+        final Timer time = new Timer(); 
+        final Timer time1 = new Timer();
+        final Timer time2 = new Timer();
+        
+        final double tempoChuva = eventos.randomTempo();
+        final double tempoAcidente = eventos.randomTempo();
+        
         for(int volta = 0; volta < qtdVoltas; volta++){
             ArrayList<Thread> threads = new ArrayList<>();
-
+            System.out.println("VOLTA>>>> "+volta);
             for (int i = 0; i < carros.size(); i++) {
-                carros.get(i).setVoltaCorrida(volta);
                 threads.add(new Thread(carros.get(i)));
                 threads.get(i).start();
             }
             
             for (Thread thread : threads) {
-                thread.join();
-            }
+                thread.join(); 
+            } 
             
             String str = "Volta" + (volta+1) + "\n";
             log.append(str);
             atualizarPosicaoDepoisDaVolta();
             log.append("\n");
+
+            Thread atualizaPosicao = new Thread(new Runnable(){
+                public void run(){    
+                    time.scheduleAtFixedRate(new TimerTask(){
+                        public void run (){
+                            atualizarPosicaoDepoisDaVolta();
+                        }
+                    }, 0, 15);
+                }
+             //posições a cada 2 ms
+            });
             
-//            TimerTask tempo = new TimerTask(){
-//                public void run (){
-//                    if(run) atualizarPosicaoDepoisDaVolta();
-//                }
-//            };
-//            time.scheduleAtFixedRate(tempo, 0, 10); //posições a cada 10 ms
             
-//            TimerTask choveu = new TimerTask(){
-//                public void run (){
-//                    if(!chuva) {
-//                       chuva(tempoChuva);
-//                    }
-//                }
-//            };
-//            time.scheduleAtFixedRate(choveu, 0, tempoChuva);
+            Thread chover =new Thread(new Runnable(){
+                public void run(){
+                    time1.scheduleAtFixedRate(new TimerTask(){
+                        public void run (){
+                            chuva();
+                        }
+                    }, 0, (long) tempoChuva); 
+                }
+            });            
+          
+            Thread acidente =new Thread(new Runnable(){
+                public void run(){
+                    time2.scheduleAtFixedRate(new TimerTask(){
+                        public void run(){
+                            acidenteCarros();        
+                        }
+                    }, 5, (long) tempoAcidente);
+                }
+            });
+            //
             
-        }
-        
-       run = false;
+            atualizaPosicao.start();
+            atualizaPosicao.join();
+            chover.start();
+            chover.join();
+            acidente.start();
+            acidente.join();
+            
+        }      
+        time.cancel();
+        time1.cancel();
+        time2.cancel();
+        String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
+        System.err.print(aux);
     }
     
     public void imprimirCarrosEmOrdem(){
@@ -208,28 +241,46 @@ public class Corrida {
         }
     }
     
-    public void chuva(int tempoChuva){
-        chuva = true;
-        double porcentagem = Math.random();
-        while(porcentagem == 0) porcentagem = Math.random(); 
-        for(Carro c: carros){
-            c.setChuva(porcentagem);
+    public void chuva(){
+        if(eventos.chuva()){
+            chuva = true;
+            synchronized (carros){
+                for(Carro carro: carros){
+                    carro.setChuva(chuva);
+                }
+            }
         }
-        log.append(String.format("Chuva reduz velocidade em %.4f\n", porcentagem*100));
+        chuva=false;
     }
     
-    public boolean acidente(){
-        Random random = new Random();
-        int acidente = random.nextInt(3);
-        if(acidente == 2){
-            return true;
+    public synchronized int carrosQuebrados(){
+        int quebrados = 0;
+        for(Carro carro: carros){
+            if(carro.isQuebrado()) quebrados++;
         }
-        return false;
+        return quebrados;
     }
     
-    //public void acidenteCarros(){
-      //  Random random = new Random();
-       // int quantCarros = random.nextInt(100);
-      //  if(quantCarros )
-    //}
+    public void acidenteCarros(){
+        if(eventos.acidente()){
+            System.out.println("ACIDENTE");
+            Random random = new Random();
+            
+            int quantCarrosEnvolvidos = eventos.quantCarrosAcidente(carros.size()+1);
+            int quantCarrosQuebrados = carrosQuebrados();
+            int posicao = random.nextInt(carros.size()+1 - quantCarrosQuebrados - quantCarrosEnvolvidos);
+            posicao++;
+            System.out.println("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos);
+           
+            int i=0;
+            synchronized (carros){ 
+                while(i<quantCarrosEnvolvidos){
+                    carros.get(posicao+i).setAcidente(true);
+                    System.out.println("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro());
+                    i++;
+                }
+            }
+        }        
+    }
+   
 }
