@@ -80,7 +80,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         logCorridaTextArea.setText("");
         String log = temporada.iniciarProximaCorrida();
         logCorridaTextArea.setText(log);
-        System.out.println(temporada.colocacaoFinal());
     }
     
     @SuppressWarnings("unchecked")

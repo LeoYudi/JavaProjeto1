@@ -30,6 +30,10 @@ public class Corrida {
     StringBuffer log;
     int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
                                                                 //a partir do décimo não ganha ponto
+    private ArrayList<String> resultPilotoId;
+    private ArrayList<String> resultTempoAcumulado;
+    private ArrayList<Integer> resultColocacao;
+    private ArrayList<Integer> resultPontuacao;
     
     public Corrida(String nomeGP, String cidade, int qtdVoltas, int distanciaVolta) {
         this.nomeGP = nomeGP;
@@ -40,6 +44,10 @@ public class Corrida {
         this.distanciaVolta = distanciaVolta;
         log = new StringBuffer();
         eventos = new Eventos();
+        this.resultPilotoId = new ArrayList<>();
+        this.resultTempoAcumulado = new ArrayList<>();
+        this.resultColocacao = new ArrayList<>();
+        this.resultPontuacao = new ArrayList<>();
     }
 
     public String getNomeGP() {
@@ -108,6 +116,22 @@ public class Corrida {
     
     public void appendLog(String str){
         log.append(str);
+    }
+
+    public ArrayList<String> getResultPilotoId() {
+        return resultPilotoId;
+    }
+
+    public ArrayList<String> getResultTempoAcumulado() {
+        return resultTempoAcumulado;
+    }
+
+    public ArrayList<Integer> getResultColocacao() {
+        return resultColocacao;
+    }
+
+    public ArrayList<Integer> getResultPontuacao() {
+        return resultPontuacao;
     }
     
     public void gerarPosicoesDeLargada(){
@@ -193,9 +217,35 @@ public class Corrida {
         }
         
         atribuirPontuacao();
+        montarResultados();
         String aux = "\nFIM DA CORRIDA EM "+ cidade+"\n";
         System.err.print(aux);
         //log.append(aux);
+    }
+    
+    /*
+    Popula os arraylists de resultados da corrida
+    */
+    public void montarResultados(){
+        for(int i = 0; i < carros.size(); i++){
+            Carro carro = carros.get(i);
+            resultPilotoId.add(carro.getPiloto().getId());
+            resultPontuacao.add(carro.getPiloto().getPontuacaoUltimaCorrida());
+            resultTempoAcumulado.add(carro.getStringTempoAcumulado());
+            resultColocacao.add(i+1);
+        }
+    }
+    
+    /*
+    Retorna uma string com o nome, colocação, pontuação e tempo da corrida de cada piloto naquela corrida
+    */
+    public String resultadoCorrida(){
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < carros.size(); i++){
+            str.append(String.format("Nome: "+resultPilotoId.get(i)+" Colocação: "+resultColocacao.get(i)+ 
+                    " Pontuação: "+resultPontuacao.get(i)+" Tempo da corrida: "+resultTempoAcumulado.get(i)+"\n"));
+        }
+        return str.toString();
     }
     
     /*

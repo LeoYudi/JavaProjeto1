@@ -48,18 +48,24 @@ public class Temporada {
         return null;
     }
     
-    public String colocacaoFinal(){
+    /*
+    Retorna uma string com o nome, colocação e pontuação do piloto na temporada
+    Essa string está ordenada de acordo com a pontuação do piloto
+    */
+    public String colocacaoPilotosFinalTemporada(){
         ArrayList<Piloto> pilotos = new ArrayList<>();
+        StringBuilder str = new StringBuilder();
         for(Carro carro: carros){
-            pilotos.add(carro.getPiloto());
+            Piloto piloto = carro.getPiloto();
+            pilotos.add(piloto);
         }
-        pilotos.sort(new ScoreComparator());
-        
-        String str = "";
-        for(Piloto piloto: pilotos){
-            str += piloto.getId() +" "+ piloto.getPontuacaoTotal() + "\n";
+        pilotos.sort(new PontuacaoTemporadaComparator()); //ordenando de acordo com a pontuação total na competição
+        for(int i = 0; i < pilotos.size(); i++){
+            Piloto piloto = pilotos.get(i);
+            str.append(String.format("Nome: "+piloto.getId()+" Colocação: "+(i+1)+ 
+                    " Pontuação: "+piloto.getPontuacaoTotal()+"\n"));
         }
-        return str;
+        return str.toString();
     }
     
     public ArrayList<Corrida> getCorridas() {
