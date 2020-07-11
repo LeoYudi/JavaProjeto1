@@ -43,8 +43,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         temporada = new Temporada(corridas, carros);
         
-        jPanel1.setVisible(false);
-        jPanel2.setVisible(false);
+        for(Corrida corrida: corridas){
+            corridasComboBox.addItem(corrida.nomeGP);
+        }
+        
+        resultadoCorridasPanel.setVisible(false);
+        iniciarTemporadaPanel.setVisible(false);
         iniciarCorridaPanel.setVisible(false);
     }
     
@@ -88,10 +92,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         layeredPane = new javax.swing.JLayeredPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        resultadoCorridasPanel = new javax.swing.JPanel();
+        corridasComboBox = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        resultadoCorridaTextArea = new javax.swing.JTextArea();
+        iniciarTemporadaPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        logCorridaTextArea1 = new javax.swing.JTextArea();
         iniciarCorridaPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         nomeGPLabel = new javax.swing.JLabel();
@@ -106,7 +113,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         opIniciarCorrida = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        opIniciarTemporada = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -115,42 +122,58 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        corridasComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                corridasComboBoxActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(377, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(374, 374, 374))
+        resultadoCorridaTextArea.setColumns(20);
+        resultadoCorridaTextArea.setRows(5);
+        jScrollPane3.setViewportView(resultadoCorridaTextArea);
+
+        javax.swing.GroupLayout resultadoCorridasPanelLayout = new javax.swing.GroupLayout(resultadoCorridasPanel);
+        resultadoCorridasPanel.setLayout(resultadoCorridasPanelLayout);
+        resultadoCorridasPanelLayout.setHorizontalGroup(
+            resultadoCorridasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultadoCorridasPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(resultadoCorridasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(resultadoCorridasPanelLayout.createSequentialGroup()
+                        .addComponent(corridasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 737, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(215, 215, 215))
+        resultadoCorridasPanelLayout.setVerticalGroup(
+            resultadoCorridasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(resultadoCorridasPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(corridasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jLabel2.setText("jLabel2");
+        logCorridaTextArea1.setColumns(20);
+        logCorridaTextArea1.setRows(5);
+        jScrollPane2.setViewportView(logCorridaTextArea1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(367, 367, 367)
-                .addComponent(jLabel2)
-                .addContainerGap(384, Short.MAX_VALUE))
+        javax.swing.GroupLayout iniciarTemporadaPanelLayout = new javax.swing.GroupLayout(iniciarTemporadaPanel);
+        iniciarTemporadaPanel.setLayout(iniciarTemporadaPanelLayout);
+        iniciarTemporadaPanelLayout.setHorizontalGroup(
+            iniciarTemporadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(iniciarTemporadaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(256, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(200, 200, 200))
+        iniciarTemporadaPanelLayout.setVerticalGroup(
+            iniciarTemporadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, iniciarTemporadaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações da corrida"));
@@ -165,7 +188,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         qtdCorridasLabel.setText("Corrida 1 de 20");
 
-        iniciarCorridaBtn.setText("Iniciar corrida");
+        iniciarCorridaBtn.setText("Iniciar Temporada");
         iniciarCorridaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 iniciarCorridaBtnActionPerformed(evt);
@@ -181,7 +204,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nomeGPLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cidadeGPLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(qtdVoltasLabel)
                     .addComponent(kmPorVoltaLabel))
@@ -250,8 +273,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        layeredPane.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        layeredPane.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layeredPane.setLayer(resultadoCorridasPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layeredPane.setLayer(iniciarTemporadaPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layeredPane.setLayer(iniciarCorridaPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layeredPaneLayout = new javax.swing.GroupLayout(layeredPane);
@@ -260,12 +283,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layeredPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(iniciarTemporadaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layeredPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resultadoCorridasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layeredPaneLayout.createSequentialGroup()
@@ -277,12 +300,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layeredPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(iniciarTemporadaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layeredPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resultadoCorridasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layeredPaneLayout.createSequentialGroup()
@@ -311,8 +334,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(opIniciarCorrida);
 
-        jMenuItem2.setText("Iniciar todas as corridas");
-        jMenu1.add(jMenuItem2);
+        opIniciarTemporada.setText("Iniciar temporada");
+        opIniciarTemporada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opIniciarTemporadaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(opIniciarTemporada);
 
         menuBar.add(jMenu1);
 
@@ -326,6 +354,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Resultados");
 
         jMenuItem4.setText("Resultado de corrida");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuItem5.setText("Resultado da temporada");
@@ -387,6 +420,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_iniciarCorridaBtnActionPerformed
 
+    private void opIniciarTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opIniciarTemporadaActionPerformed
+    
+//        try {
+//            temporada.iniciarTodasCorridas();
+//        } catch (InterruptedException ex){
+//            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        iniciarTemporadaPanel.setVisible(true);
+    }//GEN-LAST:event_opIniciarTemporadaActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        resultadoCorridasPanel.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
+
+        switch(corridasComboBox.getSelectedIndex()){
+            case 0:
+                resultadoCorridaTextArea.setText(temporada.getCorridas().get(0).nomeGP);
+                break;
+            
+            case 1:
+                resultadoCorridaTextArea.setText(temporada.getCorridas().get(1).nomeGP);
+                break;
+        }
+    }//GEN-LAST:event_corridasComboBoxActionPerformed
+
     private void switchPanels(JPanel panel){
         layeredPane.removeAll();
         layeredPane.add(panel);
@@ -431,29 +491,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cidadeGPLabel;
+    private javax.swing.JComboBox<String> corridasComboBox;
     private javax.swing.JButton iniciarCorridaBtn;
     private javax.swing.JPanel iniciarCorridaPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel iniciarTemporadaPanel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel kmPorVoltaLabel;
     private javax.swing.JLayeredPane layeredPane;
     private javax.swing.JTextArea logCorridaTextArea;
+    private javax.swing.JTextArea logCorridaTextArea1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nomeGPLabel;
     private javax.swing.JMenuItem opIniciarCorrida;
+    private javax.swing.JMenuItem opIniciarTemporada;
     private javax.swing.JLabel qtdCorridasLabel;
     private javax.swing.JLabel qtdVoltasLabel;
+    private javax.swing.JTextArea resultadoCorridaTextArea;
+    private javax.swing.JPanel resultadoCorridasPanel;
     // End of variables declaration//GEN-END:variables
 }

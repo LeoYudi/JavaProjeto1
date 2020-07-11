@@ -48,6 +48,10 @@ public class Temporada {
         return null;
     }
     
+    public void inciarTodasCorridas() throws InterruptedException{
+        //
+    }
+    
     public String colocacaoFinal(){
         ArrayList<Piloto> pilotos = new ArrayList<>();
         for(Carro carro: carros){
