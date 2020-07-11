@@ -47,21 +47,21 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    public void criarEquipes(int k){
+    private void criarEquipes(int k){
         for(int i=0; i<k; i++){
             ArrayList<Mecanico> mecanicos = new ArrayList();
             ArrayList<Engenheiro> engenheiros = new ArrayList();
             ArrayList<Piloto> pilotos = new ArrayList();
             Equipe equipe = new Equipe("E"+i);
             for(int m = 0; m<4;m++){
-                Mecanico mecanico = new Mecanico("E"+i);
+                Mecanico mecanico = new Mecanico("E"+i+"Mecanico"+m);
                 mecanicos.add(mecanico);
             }
             for(int p = 0; p<2;p++){
-                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
+                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p, "E"+i+"Eng"+p);
                 engenheiros.add(engenheiro);
                 Carro carro;
-                carro = new Carro("E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, null);
+                carro = new Carro("E"+i,"E"+i+"Piloto"+p, "E"+i+"Carro"+p, i, null);
                 Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,carro,0);
                 this.carros.add(carro);
                 pilotos.add(piloto);
@@ -71,6 +71,14 @@ public class MainApp extends Application {
             equipe.setMecanico(mecanicos);
             this.equipes.add(equipe);
         }
+        
+        for(Carro carro: carros){
+            for(Equipe equipe: equipes){
+                if(equipe.getId().equals(carro.getIdEquipe()))
+                    carro.setEquipe(equipe);
+            }
+        }
+        
     }
     
 }

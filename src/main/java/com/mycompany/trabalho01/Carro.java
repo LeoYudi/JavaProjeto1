@@ -9,6 +9,7 @@ import com.mycompany.trabalho01.Corrida;
 import static java.lang.System.nanoTime;
 import javax.swing.JTextArea;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 /**
  *
@@ -26,6 +27,8 @@ import java.text.DecimalFormat;
  * @author rebeca
  */
 public class Carro implements Runnable{
+    private Equipe equipe;
+    private String idEquipe;
     private String idPiloto;
     private String idCarro;
     private int posicao;
@@ -41,7 +44,7 @@ public class Carro implements Runnable{
     private Corrida corridaAtual;
     private double tempoAcumulado;
     private double tempoUltimaVolta;
-           StringBuffer log;
+    
     public enum estado{
         PARADO("Parado"),
         CORRENDO("Correndo"),
@@ -68,60 +71,102 @@ public class Carro implements Runnable{
         }      
     }
     
-    public Carro(String idPiloto, String id, int posicao) {   
-        this.idPiloto = idPiloto;
-        this.idCarro = id;
-        this.posicao = posicao;
-        e = estado.fromInteger(0);
-        tempoAcumulado = 0;
-        this.desgaste = 0;
-        this.quebrado = false;
-        this.chuva = false;
-        this.acidente = false;
-        this.log = new StringBuffer();
-    }
-    
-    public Carro(String idPiloto, String id, int posicao, Corrida corridaAtual) {   
+    public Carro(String idEquipe, String idPiloto, String id, int posicao, Corrida corridaAtual) {   
+        Random random = new Random();
+        this.idEquipe = idEquipe;
         this.idPiloto = idPiloto;
         this.idCarro = id;
         this.posicao = posicao;
         this.corridaAtual = corridaAtual;
         e = estado.fromInteger(0);
         tempoAcumulado = 0;
+        this.comb = 10 + random.nextInt(5);
         this.quebrado = false;
         this.chuva = false;
         this.acidente = false;
-        this.log = new StringBuffer();
     }
     
     //uma volta
     @Override
     public void run() {
-        
+        DecimalFormat df = new DecimalFormat("0.000");
         if(!quebrado){
+            
             e = estado.fromInteger(1);
             Eventos eventos = new Eventos();
             boolean pitstop = true;
+            
             this.velocidade = 230 + Math.random()*20;
+            
+            if(comb>0) {
+                if(comb - velocidade/230 >= 0)
+                comb -= velocidade/230;
+            }
+            
+            else if(comb == 0){
+                e =  estado.fromInteger(0);
+                String aux = e +" "+idCarro + " sem combustível";
+                
+                corridaAtual.appendLog(aux);
+                corridaAtual.appendLog("\n");
+                
+                e= estado.fromInteger(2);
+                aux = e +" "+idCarro + ">>> abasteceu em "+ df.format(equipe.abastecer(this))+ "ms";
+                pitstop = false;
+                corridaAtual.appendLog(aux);
+                corridaAtual.appendLog("\n");
+                e = estado.fromInteger(1);
+            }
+            
+            if(comb <= 5){
+                e = estado.fromInteger(2);
+                double tempoAbastecer = equipe.abastecer(this);
+                String aux = e +" "+idCarro + ">>> abasteceu em "+ df.format(tempoAbastecer)+ "ms";
+               
+                corridaAtual.appendLog(aux);
+                corridaAtual.appendLog("\n");
+                
+                pitstop=false;
+                e = estado.fromInteger(1);
+            }
+            
             if(chuva) chuva();
             if(acidente) acidente();
+            
             this.velocidade -= this.desgaste*1.2;
+            
             tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
+            
             if(pitstop){
                 if(eventos.pitStop(this)){
-                    corridaAtual.appendLog(idCarro+" parou no pitstop. Mais 20s\n");
-                    pitStop();
+                   // corridaAtual.appendLog(idCarro+" parou no pitstop. Mais 20s\n");
+                    String aux = equipe.pitStop(this);
+                    corridaAtual.appendLog(aux);
+                    corridaAtual.appendLog("\n");
                 }
                 else{
                     this.desgaste += this.corridaAtual.distanciaVolta;
                 }
             }
+            
             if(eventos.quebraCarro(this)){
                 corridaAtual.appendLog(idCarro+" quebrou\n");
                 quebrar();
             }
-            
-            tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste;
+
+            if(desgaste>50){
+                e = estado.fromInteger(2);
+                String aux = e +" "+idCarro + ">>> desgaste de "+desgaste+">>> trocando pneus. ";
+                double trocaPneuDesgaste= equipe.trocarPneu(this);
+                aux += "Mais "+df.format(trocaPneuDesgaste)+ "ms";
+               
+                corridaAtual.appendLog(aux);
+                corridaAtual.appendLog("\n");
+                
+                pitstop = false; 
+                e = estado.fromInteger(1);
+            }
+            tempoAcumulado += tempoUltimaVolta + 0.1*this.desgaste; 
         }
     }
     
@@ -261,7 +306,9 @@ public class Carro implements Runnable{
         DecimalFormat df = new DecimalFormat("0.00");
         this.velocidade -= this.velocidade*porcentagem;
         if(acidente){
-            System.out.println("ACIDENTE> carro " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%");
+            String aux ="Acidente--> carro " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%";
+            System.out.println(aux);
+            corridaAtual.appendLog(aux);
         }
     }
     
@@ -273,9 +320,15 @@ public class Carro implements Runnable{
             reduzVelocidade(porcentagem);
             String aux = "Chuva--> "+idCarro+ " velocidade reduzida em "+df.format(porcentagem*100)+ "%";
             System.out.println(aux);
-            log.append(aux);
-            log.append("\n");
+            corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
         }
+                                                             //troca Pneu por conta da chuva
+        double trocaPneuChuva = equipe.trocarPneu(this);
+        String aux = "Chuva-->"+idCarro + " trocando pneus + "+ df.format(trocaPneuChuva);
+        corridaAtual.appendLog(aux);
+        corridaAtual.appendLog("\n");
+        
         chuva = false;
     }
     
@@ -284,14 +337,20 @@ public class Carro implements Runnable{
         Eventos eventos = new Eventos();
         double porcentagem = Math.random();
         while (porcentagem> 0.5)  porcentagem = Math.random();
-            reduzVelocidade(porcentagem);
-            pitStop();
-            if(eventos.quebraCarro(this)){
-                quebrar();
-               String aux = "Carro " +idCarro+ " quebrou no acidente posicao: "+posicao;
-               log.append(aux);
-               log.append("\n");
-            }
+        reduzVelocidade(porcentagem);
+        e = estado.fromInteger(2);
+        String aux1 = equipe.pitStop(this);
+        corridaAtual.appendLog(aux1);
+        corridaAtual.appendLog("\n");
+        e = estado.fromInteger(1);
+        pitstop=false;
+        if(eventos.quebraCarro(this)){
+            quebrar();
+            e = estado.fromInteger(0);
+            String aux = "Carro " +idCarro+ " quebrou no acidente posicao: "+posicao;
+            corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
+        }
         acidente = false;
     }
    
@@ -301,27 +360,29 @@ public class Carro implements Runnable{
         tempoUltimaVolta = 0;
         tempoAcumulado = Double.MAX_VALUE;
         desgaste = 0;
+        e = estado.fromInteger(0);
+    }
+
+    public estado getE() {
+        return e;
+    }
+
+    public void setE(estado e) {
+        this.e = e;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
+
+    public String getIdEquipe() {
+        return idEquipe;
+    }
+
+    public void setIdEquipe(String idEquipe) {
+        this.idEquipe = idEquipe;
     }
     
-    public void pitStop(){
-        tempoUltimaVolta += 0.33;
-        pitstop = false;
-        this.desgaste = 0;
-        if(acidente) {
-            System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
-            String aux = "ACIDENTE> carro " + idCarro+ " em pitStop";
-            log.append(aux);
-            log.append("\n");
-        }
-    }
-
-    public StringBuffer getLog() {
-        return log;
-    }
-
-    public void setLog(StringBuffer log) {
-        this.log = log;
-    }
     
     
 }
