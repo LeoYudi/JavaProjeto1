@@ -15,10 +15,8 @@ public class Temporada {
     private ArrayList<Equipe> equipes;
     private int qtdTotalCorridas;
     private int qtdCorridasTerminadas;
-    
     private ArrayList<Piloto> resultPiloto;
     private ArrayList<Integer> resultPontuacaoPiloto;
-    
     private ArrayList<String> resultEquipeId;
     private ArrayList<Integer> resultPontuacaoEquipe;
     
@@ -34,16 +32,15 @@ public class Temporada {
         this.resultPontuacaoEquipe = new ArrayList<>();
     }
 
-    /*
-    Verifica se todas as corridas já ocorreram
+    /** Método para verificar se todas as corridas já ocorreram
+     * @return boolean 
     */
     public boolean terminou(){
         return qtdCorridasTerminadas == qtdTotalCorridas;
     }
     
-    /*
-    Verifica se ainda há alguma corrida a ser realizada. Caso haja, ela é iniciada e é retornado seu log.
-    Caso contrário, retorna null.
+    /** Método para iniciar a próxima corrida caso a temporada não tenha se encerrado.
+     * @return String - Log da corrida ou null caso a temporada tenha terminado
     */
     public String iniciarProximaCorrida() throws InterruptedException{
         if(!terminou()){
@@ -60,8 +57,10 @@ public class Temporada {
         return null;
     }
 
-    /*
-    Essa função inicia todas as corridas de uma temporada
+    /** Método que inicia todas as corridas de uma temporada.
+     * No final da temporada, os resultados são armazenados em Arraylists
+     * @see montarResultadosPilotos()
+     * @see montarResultadosEquipes()
     */
     public void iniciarTodasCorridas() throws InterruptedException{
         for(Corrida corrida: corridas){
@@ -71,30 +70,30 @@ public class Temporada {
         montarResultadosEquipes();
     }
     
-    /*
-    Retorna uma string com o nome, colocação e pontuação do piloto na temporada
-    Essa string está ordenada de acordo com a pontuação do piloto
-    */
-    public String colocacaoPilotosFinalTemporada(){
-        ArrayList<Piloto> pilotos = new ArrayList<>();
-        StringBuilder str = new StringBuilder();
-        for(Carro carro: carros){
-            Piloto piloto = carro.getPiloto();
-            pilotos.add(piloto);
-        }
-        pilotos.sort(new PontuacaoTemporadaPilotoComparator()); //ordenando de acordo com a pontuação total na competição
-        for(int i = 0; i < pilotos.size(); i++){
-            Piloto piloto = pilotos.get(i);
-            resultPiloto.add(piloto);
-            resultPontuacaoPiloto.add(piloto.getPontuacaoTotal());
-            str.append(String.format("Nome: "+piloto.getId()+" Colocação: "+(i+1)+ 
-                    " Pontuação: "+piloto.getPontuacaoTotal()+"\n"));
-        }
-        return str.toString();
-    }
+//    /*
+//    Retorna uma string com o nome, colocação e pontuação do piloto na temporada
+//    Essa string está ordenada de acordo com a pontuação do piloto
+//    */
+//    public String colocacaoPilotosFinalTemporada(){
+//        ArrayList<Piloto> pilotos = new ArrayList<>();
+//        StringBuilder str = new StringBuilder();
+//        for(Carro carro: carros){
+//            Piloto piloto = carro.getPiloto();
+//            pilotos.add(piloto);
+//        }
+//        pilotos.sort(new PontuacaoTemporadaPilotoComparator()); //ordenando de acordo com a pontuação total na competição
+//        for(int i = 0; i < pilotos.size(); i++){
+//            Piloto piloto = pilotos.get(i);
+//            resultPiloto.add(piloto);
+//            resultPontuacaoPiloto.add(piloto.getPontuacaoTotal());
+//            str.append(String.format("Nome: "+piloto.getId()+" Colocação: "+(i+1)+ 
+//                    " Pontuação: "+piloto.getPontuacaoTotal()+"\n"));
+//        }
+//        return str.toString();
+//    }
     
-    /*
-    Popula os arraylists de resultados da corrida
+    /** Método que armazena os pilotos e suas respectivas pontuações ao final da temporada,
+     * de acordo com sua pontuação (maior para menor)
     */
     public void montarResultadosPilotos(){
         ArrayList<Piloto> pilotos = new ArrayList<>();
@@ -112,6 +111,9 @@ public class Temporada {
         }
     }
     
+    /** Método que armazena os nomes das equipes e suas respectivas pontuações ao 
+     * final da temporada, de acordo com sua pontuação (maior para menor)
+    */
     public void montarResultadosEquipes(){
         equipes.sort(new PontuacaoTemporadaEquipeComparator());
         
