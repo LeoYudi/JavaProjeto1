@@ -66,6 +66,13 @@ public class Piloto{
     public ArrayList<Integer> getPontuacao() {
         return pontuacao;
     }
+    
+    /*
+    Retorna a pontuação da posição final do arraylist
+    */
+    public int getPontuacaoUltimaCorrida(){
+        return pontuacao.get(pontuacao.size() - 1);
+    }
 
     public void setPontuacao(ArrayList<Integer> pontuacao) {
         this.pontuacao = pontuacao;
