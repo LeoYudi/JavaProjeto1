@@ -8,7 +8,9 @@ package com.mycompany.trabalho01;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -55,6 +57,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         panels.add(resultadoCorridasPanel);
         panels.add(resultadoTemporadaPanel);
         panels.add(relatorioCorridaPanel);
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        for(int i=0;i<5;i++)
+            resultadoCorridaTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        
+        for(int i=0;i<4;i++)
+            resultadoPilotoTemporadaTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+        for(int i=0;i<3;i++)
+            resultadoEquipeTemporadaTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
     }
     
     private void criarEquipes(int k){
