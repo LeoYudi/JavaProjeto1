@@ -32,7 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.carros = new ArrayList();
         this.equipes = new ArrayList();
         this.corridas = new ArrayList();
-        criarEquipes(2);
+        criarEquipes(3);
 
         corridas.add(new Corrida("GP do Brasil", "Machado", 20, 8));
         corridas.add(new Corrida("GP da Alemanha", "Berlim", 30, 10));
@@ -91,6 +91,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //        String log = temporada.iniciarProximaCorrida();
 //        logCorridaTextArea.setText(log);
         temporada.iniciarTodasCorridas();
+        temporada.imprimirLogTodasCorridas();
     }
     
     @SuppressWarnings("unchecked")
