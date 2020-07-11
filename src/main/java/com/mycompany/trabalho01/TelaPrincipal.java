@@ -64,14 +64,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ArrayList<Piloto> pilotos = new ArrayList();
             Equipe equipe = new Equipe("E"+i);
             for(int m = 0; m<4;m++){
-                Mecanico mecanico = new Mecanico("E"+i);
+                Mecanico mecanico = new Mecanico("E"+i+"Mecanico"+m);
                 mecanicos.add(mecanico);
             }
             for(int p = 0; p<2;p++){
-                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p);
+                Engenheiro engenheiro = new Engenheiro("E"+i+"Piloto"+p, "E"+i+"Eng"+p);
                 engenheiros.add(engenheiro);
                 Piloto piloto = new Piloto("E"+i,"E"+i+"Piloto"+p,engenheiro,"E"+i+"Carro"+p);
-                Carro carro = new Carro(piloto, "E"+i+"Carro"+p, i, null);
+                Carro carro = new Carro(piloto, "E"+i+"Carro"+p, i, null, "E"+i);
                 this.carros.add(carro);
                 pilotos.add(piloto);
             }
@@ -80,6 +80,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             equipe.setMecanico(mecanicos);
             this.equipes.add(equipe);
         }
+        
+        for(Carro carro: carros){
+            for(Equipe equipe: equipes){
+                if(equipe.getId().equals(carro.getIdEquipe()))
+                    carro.setEquipe(equipe);
+            }
+        }
+        
     }
     
     /*

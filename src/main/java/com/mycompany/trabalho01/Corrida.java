@@ -203,15 +203,11 @@ public class Corrida {
             } 
                 
             if(volta == voltaChuva){
-                log.append(String.format("Chuva volta: "+volta+"\n"));
-                log.append("\n");
                 chuva();
             }
             else if(volta == voltaAcidente) {
-                log.append(String.format("Acidente volta: "+volta+"\n"));
                 acidenteCarros();
             }
-            
             
             atualizarPosicaoDepoisDaVolta();
             log.append("\n");
@@ -279,16 +275,15 @@ public class Corrida {
     }
     
     public void chuva(){
-        if(true){
+        if(eventos.chuva()){
             chuva = true;
             synchronized (carros){
                 for(Carro carro: carros){
                     carro.setChuva(chuva);
-                    carro.setLog(log);
                 }
             }
         }
-        chuva=false;
+        chuva = false;
     }
     
     public synchronized int carrosQuebrados(){
@@ -300,8 +295,8 @@ public class Corrida {
     }
     
     public void acidenteCarros(){
-        if(true){
-//            System.out.println("ACIDENTE");
+
+        if(eventos.acidente()){
             Random random = new Random();
             
             int quantCarrosQuebrados = carrosQuebrados();
@@ -319,9 +314,6 @@ public class Corrida {
             synchronized (carros){ 
                 while(i<quantCarrosEnvolvidos){
                     carros.get(posicao+i-1).setAcidente(true);
-                    carros.get(posicao+i-1).setLog(log);
-                    log.append(String.format("Carro envolvido posicao: "+ (posicao+i)+ " ID: "+ carros.get(posicao+i-1).getIdCarro()+"\n"));
-//                    System.out.println("Carro envolvido posicao: "+ (posicao+i-1)+ "ID: "+ carros.get(posicao+i-1).getIdCarro());
                     i++;
                 }
             }

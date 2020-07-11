@@ -5,6 +5,7 @@
  */
 package com.mycompany.trabalho01;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -87,5 +88,42 @@ public class Equipe {
             p.imprimir();
         }
         
+    }
+    
+    public String pitStop(Carro carro){
+        DecimalFormat df = new DecimalFormat("0.000");
+        double tempo = Math.random();
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta() + tempo);
+        String aux = "Carro em pitstop por " + df.format(tempo);
+        if(carro.isAcidente()) {
+           aux = "Acidente--> carro " + carro.getIdCarro()+ " em pitStop"; 
+        }
+        
+        return aux;
+      //  this.desgaste = 0;
+    }
+    
+    public double trocarPneu(Carro carro){
+        int i = 0;
+        double tempoTroca = 0;
+        String aux = "Desgaste de "+carro.getDesgaste()+">>> trocando pneus "+ carro.getIdCarro();
+        System.out.println(aux);
+        if(!carro.isPitstop()){
+            tempoTroca = engenheiros.get(i).trocarPneu(mecanicos, carro);
+        }
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempoTroca);
+        return tempoTroca;
+    }
+    
+    public double abastecer(Carro carro){
+        int i = 0;
+        double tempoAbastecer = 0;
+        String aux = "Abastecendo>> "+ carro.getIdCarro();
+        System.out.println(aux);
+        if(!carro.isPitstop()){
+            tempoAbastecer = engenheiros.get(i).abastecer(mecanicos.get(0), carro);
+        }
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempoAbastecer);
+        return tempoAbastecer;
     }
 }
