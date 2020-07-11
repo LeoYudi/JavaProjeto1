@@ -178,8 +178,9 @@ public class Corrida {
     public void inicia() throws InterruptedException{
         resetarTempoDosCarros();
         gerarPosicoesDeLargada();
-        log.append("Posições de largada\n");
+        log.append("Posições de largada\n\n");
         atualizarPosicaoDepoisDaVolta();
+        log.append("\n");
         
         int voltaChuva = eventos.randomVolta(qtdVoltas-2);
         int voltaAcidente = eventos.randomVolta(qtdVoltas-2);
@@ -260,11 +261,9 @@ public class Corrida {
     }
     
     public void imprimirCarrosEmOrdem(){
+        log.append("\n");
         for (Carro carro : carros) {
-            log.append(String.format("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao()));
-          //  System.out.printf("%s %.4f %d\n", carro.getIdCarro(), carro.getTempoAcumulado(), carro.getPosicao());
-         //   System.out.println(" Volta: "+carro.getVoltaCorrida());
-//            System.out.printf("%s %s %d\n", carro.getIdCarro(), carro.getStringTempoAcumulado(), carro.getPosicao());
+            log.append(String.format("%dº lugar: %s %s  \n", carro.getPosicao(), carro.getIdCarro(), carro.getStringTempoAcumulado()));
         }
     }
     
@@ -307,9 +306,7 @@ public class Corrida {
             }
             else posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
             posicao++;
-            log.append(String.format("Posição acidente>>>>" + posicao + " Quantidade de carros envolvidos>>>>"+quantCarrosEnvolvidos+"\n"));
-//            System.out.println("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos);
-           
+                     
             int i=0;
             synchronized (carros){ 
                 while(i<quantCarrosEnvolvidos){

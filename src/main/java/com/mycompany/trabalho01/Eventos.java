@@ -43,18 +43,15 @@ public class Eventos {
     
     public boolean acidente(){
         double x = Math.random() * 100;
-        return x < 0.3;
+        return x < 0.4;
     }
     
     public int quantCarrosAcidente(int quantCarros){
         double x = Math.random();
         Random r = new Random();
-        int y = r.nextInt();
-        if(x < 0.8) return 2;
-        else if(x>=0.8 && x<0.9) return 3;
-        else if(x>= 0.9 && x <= 0.97) return 4;
-        //else while(y<4 || y>20) y = r.nextInt(); 
-        //return y;
+        if(x < 0.6) return 2;
+        else if(x>=0.6 && x<0.8) return 3;
+        else if(x>= 0.8 && x <= 0.97) return 4;
         else return 4+r.nextInt(quantCarros-4);
     }
     
