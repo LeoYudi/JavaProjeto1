@@ -506,9 +506,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
 //        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
         int corrida = corridasComboBox.getSelectedIndex();
-        ArrayList<String> pilotos = temporada.getCorridas().get(corrida).getResultPilotoId();
-        ArrayList<Integer> pontuacoes = temporada.getCorridas().get(corrida).getResultPontuacao();
-
+        ArrayList<Integer> pontuacoes = temporada.getCorridas().get(corrida).getResultPontuacao(); //primeira pontuaçao eh do primeiro lugar, ta em cordem decrescente
+        ArrayList<Piloto> pilotos = temporada.getCorridas().get(corrida).getResultPiloto(); //colocaçao do piloto eh a posiçao no array
+        ArrayList<String> tempo = temporada.getCorridas().get(corrida).getResultTempoAcumulado(); //crescente, primeiro eh do primeiro lugar
+        
         for(int i=0;i<20;i++){
         }
     }//GEN-LAST:event_corridasComboBoxActionPerformed
