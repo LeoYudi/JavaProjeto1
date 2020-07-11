@@ -261,7 +261,7 @@ public class Carro implements Runnable{
         DecimalFormat df = new DecimalFormat("0.00");
         this.velocidade -= this.velocidade*porcentagem;
         if(acidente){
-            System.out.println("ACIDENTE> carro " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%");
+//            System.out.println("ACIDENTE> carro " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%");
         }
     }
     
@@ -272,7 +272,7 @@ public class Carro implements Runnable{
         if(this.velocidade >=230) {
             reduzVelocidade(porcentagem);
             String aux = "Chuva--> "+idCarro+ " velocidade reduzida em "+df.format(porcentagem*100)+ "%";
-            System.out.println(aux);
+//            System.out.println(aux);
             log.append(aux);
             log.append("\n");
         }
@@ -280,7 +280,7 @@ public class Carro implements Runnable{
     }
     
     public void acidente(){
-        System.out.println("Carro acidente:" +idCarro );
+//        System.out.println("Carro acidente:" +idCarro );
         Eventos eventos = new Eventos();
         double porcentagem = Math.random();
         while (porcentagem> 0.5)  porcentagem = Math.random();
@@ -296,7 +296,7 @@ public class Carro implements Runnable{
     }
    
     public void quebrar(){
-        System.err.println("Carro "+idCarro+" quebrou");
+//        System.err.println("Carro "+idCarro+" quebrou");
         quebrado = true;
         tempoUltimaVolta = 0;
         tempoAcumulado = Double.MAX_VALUE;
@@ -308,7 +308,7 @@ public class Carro implements Runnable{
         pitstop = false;
         this.desgaste = 0;
         if(acidente) {
-            System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
+//            System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
             String aux = "ACIDENTE> carro " + idCarro+ " em pitStop";
             log.append(aux);
             log.append("\n");

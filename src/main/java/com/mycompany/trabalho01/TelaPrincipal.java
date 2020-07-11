@@ -77,9 +77,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     Inicia somente uma corrida e incrementa a quantidade de corridas finalizadas
     */
     private void iniciarCorrida() throws InterruptedException{
-        logCorridaTextArea.setText("");
-        String log = temporada.iniciarProximaCorrida();
-        logCorridaTextArea.setText(log);
+//        logCorridaTextArea.setText("");
+//        String log = temporada.iniciarProximaCorrida();
+//        logCorridaTextArea.setText(log);
+        temporada.iniciarTodasCorridas();
     }
     
     @SuppressWarnings("unchecked")
