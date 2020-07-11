@@ -48,36 +48,35 @@ public class Engenheiro {
         return maior;
     }
     
-    public double trocarPneu(ArrayList<Mecanico> mecanicos, Carro carro){
-        DecimalFormat df = new DecimalFormat("0.000");
+    public String trocarPneu(ArrayList<Mecanico> mecanicos, Carro carro){
         double tempos[] = new double[4];
         
         int i =0;
+        String aux = "Engenheiro "+ idEngenheiro + " comunica piloto "+carro.getPiloto().getId() + " para trocar pneu";
         
-        System.out.println("Engenheiro "+ idEngenheiro + " comunica piloto "+carro.getPiloto().getId() + " para trocar pneu");
-        
+        aux+= " //Mecânicos: ";
         for(Mecanico mecanico: mecanicos){
             tempos[i] =  mecanico.trocarPneu(carro);
-            System.out.println("Mecânico:"+ mecanico.getIdMecanico()+ " trocou pneu em " + df.format(tempos[i]));
+            aux+=  mecanico.getIdMecanico()+ " ";
             i++;
         }
-        
+         
         double maiorTempo = maiorTempo(tempos);
-       
-        return maiorTempo;
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ maiorTempo);
+        aux+= " trocaram pneus em " + carro.minutesToTime(maiorTempo);
+        return aux;
     }
     
-    public double abastecer(Mecanico mecanico, Carro carro){
-        DecimalFormat df = new DecimalFormat("0.000");
+    public String abastecer(Mecanico mecanico, Carro carro){
         double tempo;
-        
-       
-        System.out.println("Engenheiro "+ idEngenheiro + " comunica piloto "+carro.getPiloto().getId() + " para abastecer");
-        
         tempo =  mecanico.abastece(carro);
-        System.out.println("Mecânico:"+ mecanico.getIdMecanico()+ " abasteceu em" + df.format(tempo) + "ms");
+        String aux = "Engenheiro "+ idEngenheiro + " comunica piloto "+carro.getPiloto().getId() + " para abastecer";
+      
         
-        return tempo;
+        while(tempo == 0)  tempo =  mecanico.abastece(carro);
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempo);
+        aux+= " //Mecânico: "+mecanico.getIdMecanico() +" abastece em "+ carro.minutesToTime(tempo);
+        return aux;
     }
     
     public void trocarPosicao(){

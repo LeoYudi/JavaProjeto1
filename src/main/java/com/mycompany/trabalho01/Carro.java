@@ -93,7 +93,6 @@ public class Carro implements Runnable{
     */
     @Override
     public void run() {
-        DecimalFormat df = new DecimalFormat("0.000");
         if(!quebrado){
             
             e = estado.fromInteger(1);
@@ -115,17 +114,16 @@ public class Carro implements Runnable{
                 corridaAtual.appendLog("\n");
                 
                 e= estado.fromInteger(2);
-                aux = e +" "+idCarro + ">>> abasteceu em "+ df.format(equipe.abastecer(this))+ "ms";
+                String aux1 = e +" "+idCarro + ">>> abastecendo >> " + equipe.abastecer(this);
                 pitstop = false;
-                corridaAtual.appendLog(aux);
+                corridaAtual.appendLog(aux1);
                 corridaAtual.appendLog("\n");
                 e = estado.fromInteger(1);
             }
             
             if(comb <= 5){
                 e = estado.fromInteger(2);
-                double tempoAbastecer = equipe.abastecer(this);
-                String aux = e +" "+idCarro + ">>> abasteceu em "+ df.format(tempoAbastecer)+ "ms";
+                String aux = e +" "+idCarro + ">>> abastecendo>> "+ equipe.abastecer(this); 
                
                 corridaAtual.appendLog(aux);
                 corridaAtual.appendLog("\n");
@@ -143,9 +141,8 @@ public class Carro implements Runnable{
             
             if(pitstop){
                 if(eventos.pitStop(this)){
-                   // corridaAtual.appendLog(idCarro+" parou no pitstop. Mais 20s\n");
                     String aux = equipe.pitStop(this);
-                    corridaAtual.appendLog(aux);
+                    corridaAtual.appendLog(idCarro+">>> punição em " +aux);
                     corridaAtual.appendLog("\n");
                 }
                 else{
@@ -160,9 +157,9 @@ public class Carro implements Runnable{
 
             if(desgaste>50){
                 e = estado.fromInteger(2);
-                String aux = e +" "+idCarro + ">>> desgaste de "+desgaste+">>> trocando pneus. ";
-                double trocaPneuDesgaste= equipe.trocarPneu(this);
-                aux += "Mais "+df.format(trocaPneuDesgaste)+ "ms";
+                String aux = e +" "+idCarro + ">>> trocando pneus>>";
+                String trocaPneuDesgaste= equipe.trocarPneu(this);
+                aux += " "+ trocaPneuDesgaste;
                
                 corridaAtual.appendLog(aux);
                 corridaAtual.appendLog("\n");
@@ -320,9 +317,9 @@ public class Carro implements Runnable{
         DecimalFormat df = new DecimalFormat("0.00");
         this.velocidade -= this.velocidade*porcentagem;
         if(acidente){
-            String aux ="Acidente--> carro " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%";
-            System.out.println(aux);
+            String aux ="Acidente--> " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%";
             corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
         }
     }
     
@@ -340,8 +337,8 @@ public class Carro implements Runnable{
             corridaAtual.appendLog("\n");
         }
                                                              //troca Pneu por conta da chuva
-        double trocaPneuChuva = equipe.trocarPneu(this);
-        String aux = "Chuva-->"+idCarro + " trocando pneus + "+ df.format(trocaPneuChuva);
+        String trocaPneuChuva = equipe.trocarPneu(this);
+        String aux = "Chuva--> "+idCarro + " trocando pneus>>"+ trocaPneuChuva;
         corridaAtual.appendLog(aux);
         corridaAtual.appendLog("\n");
         
@@ -364,7 +361,7 @@ public class Carro implements Runnable{
         if(eventos.quebraCarro(this)){
             quebrar();
             e = estado.fromInteger(0);
-            String aux = "Carro " +idCarro+ " quebrou no acidente posicao: "+posicao;
+            String aux = idCarro+ " quebrou no acidente";
             corridaAtual.appendLog(aux);
             corridaAtual.appendLog("\n");
         }

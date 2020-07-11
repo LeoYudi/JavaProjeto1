@@ -91,39 +91,32 @@ public class Equipe {
     }
     
     public String pitStop(Carro carro){
-        DecimalFormat df = new DecimalFormat("0.000");
-        double tempo = Math.random();
-        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta() + tempo);
-        String aux = "Carro em pitstop por " + df.format(tempo);
+        String aux = "";
         if(carro.isAcidente()) {
-           aux = "Acidente--> carro " + carro.getIdCarro()+ " em pitStop"; 
+           aux += "Acidente--> " + carro.getIdCarro()+ " em "; 
+        }
+        double tempo = Math.random()*5;
+        while (tempo == 0) tempo = Math.random();
+        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta() + tempo);
+        aux += "pitstop " +" + "+ carro.minutesToTime(tempo);
+        return aux;
+    }
+    
+    public String trocarPneu(Carro carro){
+        String aux = "";
+        if(!carro.isPitstop()){
+            aux += carro.getPiloto().getEngenheiro().trocarPneu(mecanicos, carro);
         }
         
         return aux;
-      //  this.desgaste = 0;
     }
     
-    public double trocarPneu(Carro carro){
-        int i = 0;
-        double tempoTroca = 0;
-        String aux = "Desgaste de "+carro.getDesgaste()+">>> trocando pneus "+ carro.getIdCarro();
-        System.out.println(aux);
+    public String abastecer(Carro carro){
+        String aux= "";
         if(!carro.isPitstop()){
-            tempoTroca = engenheiros.get(i).trocarPneu(mecanicos, carro);
+            aux+= carro.getPiloto().getEngenheiro().abastecer(mecanicos.get(0), carro);
         }
-        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempoTroca);
-        return tempoTroca;
-    }
-    
-    public double abastecer(Carro carro){
-        int i = 0;
-        double tempoAbastecer = 0;
-        String aux = "Abastecendo>> "+ carro.getIdCarro();
-        System.out.println(aux);
-        if(!carro.isPitstop()){
-            tempoAbastecer = engenheiros.get(i).abastecer(mecanicos.get(0), carro);
-        }
-        carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempoAbastecer);
-        return tempoAbastecer;
+        
+        return aux;
     }
 }
