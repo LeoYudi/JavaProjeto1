@@ -267,12 +267,6 @@ public class Corrida {
         }
     }
     
-    public void imprimir(){
-        for(Equipe e: equipes){
-            e.imprimir();
-        }
-    }
-    
     public void chuva(){
         if(eventos.chuva()){
             chuva = true;
