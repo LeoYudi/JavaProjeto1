@@ -90,13 +90,6 @@ public class Carro implements Runnable{
     }
     
     /** Método que realiza uma volta na corrida em um carro, neste é verificado gasolina, desgaste e a probabilidade de realizar os eventos
-    * @see equipe.abastecer(Carro)
-    * @see chuva()
-    * @see acidente()
-    * @see eventos.pitstop()
-    * @see eventos.quebraCarro()
-    * @see equipe.pitstop()
-    * @see quebrar()
     */
     @Override
     public void run() {
@@ -334,8 +327,6 @@ public class Carro implements Runnable{
     }
     
     /** Método que trata impacto da chuva na corrida
-     * @see reduzVelocidade(double) 
-     * @see equipe.trocaPneu(Carro)
     */
     public void chuva(){
         DecimalFormat df = new DecimalFormat("0.00");
@@ -358,8 +349,6 @@ public class Carro implements Runnable{
     }
     
     /** Método que trata impacto de um acidente na corrida
-     * @see eventos.quebraCarro(Carro)
-     * @see quebrar()
      */
     public void acidente(){
         Eventos eventos = new Eventos();
