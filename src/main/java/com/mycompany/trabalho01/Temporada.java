@@ -47,11 +47,6 @@ public class Temporada {
         }
         return null;
     }
-    
-
-    public void inciarTodasCorridas() throws InterruptedException{
-        //
-    }
 
     /*
     Essa função inicia todas as corridas de uma temporada
