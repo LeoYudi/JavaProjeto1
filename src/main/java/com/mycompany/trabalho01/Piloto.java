@@ -100,8 +100,4 @@ public class Piloto{
         pontuacaoTotal += pontosCorrida;
     }
     
-    public void imprimir(){
-        System.out.println("Id piloto:" +id);
-        System.out.println("Id carro:" +idCarro);
-    }
 }

@@ -75,20 +75,6 @@ public class Equipe {
     public void setPontosTotal(int pontosTotal) {
         this.pontosTotal = pontosTotal;
     }
-
-    public void imprimir(){
-        System.out.println("Id equipe:" +id);
-        for(Mecanico m: mecanicos){
-            m.imprimir();
-        }
-        for(Engenheiro e : engenheiros){
-            e.imprimir();
-        }
-        for(Piloto p: pilotos){
-            p.imprimir();
-        }
-        
-    }
     
     public String pitStop(Carro carro){
         DecimalFormat df = new DecimalFormat("0.000");
