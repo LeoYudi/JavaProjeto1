@@ -295,7 +295,7 @@ public class Carro implements Runnable{
     
     /** Método para converter os minutos em formato de horas:minutos:segundos
      * @return String - formato de horas:minutos:segundos
-     * @param double - minutos
+     * @param minutes - double representando os minutos
     */
     public String minutesToTime(double minutes){
         String[] aux = String.format("%.6f", minutes).split(",");
@@ -309,7 +309,7 @@ public class Carro implements Runnable{
     }
     
     /** Método utilizado para transitar o carro de uma corrida para outra, atualizando seus atributos
-     * @param Corrida - próxima corrida a ser realizada
+     * @param novaCorrida
     */
     public void resetar(Corrida novaCorrida){
         this.corridaAtual = novaCorrida;
@@ -321,7 +321,7 @@ public class Carro implements Runnable{
     }
     
     /** Método reduzir velocidade do carro
-     * @param double - porcentagem que a velocidade será reduzida 
+     * @param porcentagem - porcentagem que a velocidade será reduzida 
     */
     public void reduzVelocidade(double porcentagem){
         DecimalFormat df = new DecimalFormat("0.00");
