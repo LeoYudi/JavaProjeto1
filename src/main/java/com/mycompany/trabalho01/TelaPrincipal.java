@@ -100,14 +100,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layeredPane = new javax.swing.JLayeredPane();
         resultadoCorridasPanel = new javax.swing.JPanel();
         corridasComboBox = new javax.swing.JComboBox<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        resultadoCorridaTextArea = new javax.swing.JTextArea();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        resultadoCorridaTable = new javax.swing.JTable();
         iniciarTemporadaPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         logIniciarTemporadaTextArea = new javax.swing.JTextArea();
         resultadoTemporadaPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        resultadoEquipeTemporadaTable = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        resultadoTemporadaTextArea = new javax.swing.JTextArea();
+        resultadoPilotoTemporadaTable = new javax.swing.JTable();
         relatorioCorridaPanel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         relatorioCorridaTextArea = new javax.swing.JTextArea();
@@ -129,9 +131,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        resultadoCorridaTextArea.setColumns(20);
-        resultadoCorridaTextArea.setRows(5);
-        jScrollPane3.setViewportView(resultadoCorridaTextArea);
+        resultadoCorridaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Posição", "Nome do Piloto", "Nome da Equipe", "Pontuação", "Tempo da Corrida"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(resultadoCorridaTable);
 
         javax.swing.GroupLayout resultadoCorridasPanelLayout = new javax.swing.GroupLayout(resultadoCorridasPanel);
         resultadoCorridasPanel.setLayout(resultadoCorridasPanelLayout);
@@ -142,8 +184,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(resultadoCorridasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(resultadoCorridasPanelLayout.createSequentialGroup()
                         .addComponent(corridasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 737, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE))
                 .addContainerGap())
         );
         resultadoCorridasPanelLayout.setVerticalGroup(
@@ -152,8 +194,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(corridasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         logIniciarTemporadaTextArea.setColumns(20);
@@ -177,11 +219,85 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        resultadoTemporadaPanel.setPreferredSize(new java.awt.Dimension(785, 480));
+        resultadoTemporadaPanel.setPreferredSize(new java.awt.Dimension(785, 370));
 
-        resultadoTemporadaTextArea.setColumns(20);
-        resultadoTemporadaTextArea.setRows(5);
-        jScrollPane4.setViewportView(resultadoTemporadaTextArea);
+        resultadoEquipeTemporadaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Posição", "Nome da Equipe", "Pontuação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(resultadoEquipeTemporadaTable);
+
+        resultadoPilotoTemporadaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Posição", "Nome do Piloto", "Nome da Equipe", "Pontuação"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(resultadoPilotoTemporadaTable);
 
         javax.swing.GroupLayout resultadoTemporadaPanelLayout = new javax.swing.GroupLayout(resultadoTemporadaPanel);
         resultadoTemporadaPanel.setLayout(resultadoTemporadaPanelLayout);
@@ -189,14 +305,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
             resultadoTemporadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(resultadoTemporadaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         resultadoTemporadaPanelLayout.setVerticalGroup(
             resultadoTemporadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, resultadoTemporadaPanelLayout.createSequentialGroup()
+            .addGroup(resultadoTemporadaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addGroup(resultadoTemporadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(resultadoTemporadaPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 161, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -382,12 +504,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_opResultadoCorridaActionPerformed
 
     private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
-        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
+//        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
+        int corrida = corridasComboBox.getSelectedIndex();
+        ArrayList<String> pilotos = temporada.getCorridas().get(corrida).getResultPilotoId();
+        ArrayList<Integer> pontuacoes = temporada.getCorridas().get(corrida).getResultPontuacao();
+
+        for(int i=0;i<20;i++){
+        }
     }//GEN-LAST:event_corridasComboBoxActionPerformed
 
     private void opResultadoTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opResultadoTemporadaActionPerformed
         switchPanels(resultadoTemporadaPanel);
-        resultadoTemporadaTextArea.setText(temporada.colocacaoPilotosFinalTemporada());
+        System.out.println(temporada.colocacaoPilotosFinalTemporada());
+        resultadoPilotoTemporadaTable.setValueAt("oie", 0, 0);
     }//GEN-LAST:event_opResultadoTemporadaActionPerformed
 
     private void relatorioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioComboBoxActionPerformed
@@ -447,10 +576,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLayeredPane layeredPane;
     private javax.swing.JTextArea logIniciarTemporadaTextArea;
     private javax.swing.JMenuBar menuBar;
@@ -461,9 +591,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> relatorioComboBox;
     private javax.swing.JPanel relatorioCorridaPanel;
     private javax.swing.JTextArea relatorioCorridaTextArea;
-    private javax.swing.JTextArea resultadoCorridaTextArea;
+    private javax.swing.JTable resultadoCorridaTable;
     private javax.swing.JPanel resultadoCorridasPanel;
+    private javax.swing.JTable resultadoEquipeTemporadaTable;
+    private javax.swing.JTable resultadoPilotoTemporadaTable;
     private javax.swing.JPanel resultadoTemporadaPanel;
-    private javax.swing.JTextArea resultadoTemporadaTextArea;
     // End of variables declaration//GEN-END:variables
 }
