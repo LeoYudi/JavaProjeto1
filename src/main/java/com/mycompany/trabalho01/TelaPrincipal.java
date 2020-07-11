@@ -220,6 +220,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        logIniciarTemporadaTextArea.setEditable(false);
         logIniciarTemporadaTextArea.setColumns(20);
         logIniciarTemporadaTextArea.setRows(5);
         jScrollPane2.setViewportView(logIniciarTemporadaTextArea);
@@ -346,6 +347,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         relatorioCorridaPanel.setPreferredSize(new java.awt.Dimension(785, 480));
 
+        relatorioCorridaTextArea.setEditable(false);
         relatorioCorridaTextArea.setColumns(20);
         relatorioCorridaTextArea.setRows(5);
         jScrollPane5.setViewportView(relatorioCorridaTextArea);
