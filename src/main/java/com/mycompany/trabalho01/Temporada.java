@@ -15,11 +15,20 @@ public class Temporada {
     private int qtdTotalCorridas;
     private int qtdCorridasTerminadas;
     
+    private ArrayList<String> resultPilotoId;
+    private ArrayList<Integer> resultPontuacao;
+    private ArrayList<Integer> resultColocacao;
+    private ArrayList<String> resultEquipeId;
+    
     public Temporada(ArrayList<Corrida> corridas, ArrayList<Carro> carros){
         this.corridas = corridas;
         this.carros = carros;
         this.qtdTotalCorridas = corridas.size();
         this.qtdCorridasTerminadas = 0;
+        this.resultPilotoId = new ArrayList<>();
+        this.resultPontuacao = new ArrayList<>();
+        this.resultColocacao = new ArrayList<>();
+        this.resultEquipeId = new ArrayList<>();
     }
 
     /*
@@ -71,10 +80,35 @@ public class Temporada {
         pilotos.sort(new PontuacaoTemporadaComparator()); //ordenando de acordo com a pontuação total na competição
         for(int i = 0; i < pilotos.size(); i++){
             Piloto piloto = pilotos.get(i);
+            resultPilotoId.add(piloto.getId());
+            resultColocacao.add(i+1);
+            resultPontuacao.add(piloto.getPontuacaoTotal());
+            resultEquipeId.add(piloto.getIdEquipe());
             str.append(String.format("Nome: "+piloto.getId()+" Colocação: "+(i+1)+ 
                     " Pontuação: "+piloto.getPontuacaoTotal()+"\n"));
         }
         return str.toString();
+    }
+    
+    /*
+    Popula os arraylists de resultados da corrida
+    */
+    public void montarResultados(){
+        ArrayList<Piloto> pilotos = new ArrayList<>();
+        for(Carro carro: carros){
+            Piloto piloto = carro.getPiloto();
+            pilotos.add(piloto);
+        }
+        
+        pilotos.sort(new PontuacaoTemporadaComparator()); //ordenando de acordo com a pontuação total na competição
+        
+        for(int i = 0; i < pilotos.size(); i++){
+            Piloto piloto = pilotos.get(i);
+            resultPilotoId.add(piloto.getId());
+            resultColocacao.add(i+1);
+            resultPontuacao.add(piloto.getPontuacaoTotal());
+            resultEquipeId.add(piloto.getIdEquipe());
+        }
     }
     
     public ArrayList<Corrida> getCorridas() {
@@ -108,6 +142,21 @@ public class Temporada {
     public void setQtdCorridasTerminadas(int qtdCorridasTerminadas) {
         this.qtdCorridasTerminadas = qtdCorridasTerminadas;
     }
-    
+
+    public ArrayList<String> getResultPilotoId() {
+        return resultPilotoId;
+    }
+
+        public ArrayList<Integer> getPontuacao() {
+        return resultPontuacao;
+    }
+
+    public ArrayList<Integer> getResultColocacao() {
+        return resultColocacao;
+    }
+
+    public ArrayList<String> getResultEquipeId() {
+        return resultEquipeId;
+    }
     
 }
