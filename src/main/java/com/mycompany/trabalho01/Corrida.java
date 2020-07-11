@@ -134,6 +134,12 @@ public class Corrida {
         return resultPontuacao;
     }
     
+    public void resetarTempoDosCarros(){
+        for(Carro carro: carros){
+            carro.resetar(this);
+        }
+    }
+    
     public void gerarPosicoesDeLargada(){
         ArrayList<Integer> posicoes = new ArrayList<>();
         
@@ -176,6 +182,7 @@ public class Corrida {
     }
     
     public void inicia() throws InterruptedException{
+        resetarTempoDosCarros();
         gerarPosicoesDeLargada();
         atualizarPosicaoDepoisDaVolta();
         log.append("\n");
