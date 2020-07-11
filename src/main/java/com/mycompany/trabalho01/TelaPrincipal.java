@@ -47,11 +47,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         resultadoCorridasPanel.setVisible(false);
         iniciarTemporadaPanel.setVisible(false);
-        
+        resultadoTemporadaPanel.setVisible(false);
+        relatorioCorridaPanel.setVisible(false);
         
         panels = new ArrayList<>();
         panels.add(iniciarTemporadaPanel);
         panels.add(resultadoCorridasPanel);
+        panels.add(resultadoTemporadaPanel);
+        panels.add(relatorioCorridaPanel);
     }
     
     private void criarEquipes(int k){
@@ -101,19 +104,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         resultadoCorridaTextArea = new javax.swing.JTextArea();
         iniciarTemporadaPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        logCorridaTextArea1 = new javax.swing.JTextArea();
-        resultadoTemporadaPanel = new java.awt.Panel();
+        logIniciarTemporadaTextArea = new javax.swing.JTextArea();
+        resultadoTemporadaPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         resultadoTemporadaTextArea = new javax.swing.JTextArea();
+        relatorioCorridaPanel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        relatorioCorridaTextArea = new javax.swing.JTextArea();
+        relatorioComboBox = new javax.swing.JComboBox<>();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        opIniciarCorrida = new javax.swing.JMenuItem();
         opIniciarTemporada = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        opRelatorioCorrida = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        opResultadoCorrida = new javax.swing.JMenuItem();
+        opResultadoTemporada = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,9 +156,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        logCorridaTextArea1.setColumns(20);
-        logCorridaTextArea1.setRows(5);
-        jScrollPane2.setViewportView(logCorridaTextArea1);
+        logIniciarTemporadaTextArea.setColumns(20);
+        logIniciarTemporadaTextArea.setRows(5);
+        jScrollPane2.setViewportView(logIniciarTemporadaTextArea);
 
         javax.swing.GroupLayout iniciarTemporadaPanelLayout = new javax.swing.GroupLayout(iniciarTemporadaPanel);
         iniciarTemporadaPanel.setLayout(iniciarTemporadaPanelLayout);
@@ -171,7 +177,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        resultadoTemporadaPanel.setBackground(new java.awt.Color(240, 240, 240));
         resultadoTemporadaPanel.setPreferredSize(new java.awt.Dimension(785, 480));
 
         resultadoTemporadaTextArea.setColumns(20);
@@ -195,9 +200,45 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        relatorioCorridaPanel.setPreferredSize(new java.awt.Dimension(785, 480));
+
+        relatorioCorridaTextArea.setColumns(20);
+        relatorioCorridaTextArea.setRows(5);
+        jScrollPane5.setViewportView(relatorioCorridaTextArea);
+
+        relatorioComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                relatorioComboBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout relatorioCorridaPanelLayout = new javax.swing.GroupLayout(relatorioCorridaPanel);
+        relatorioCorridaPanel.setLayout(relatorioCorridaPanelLayout);
+        relatorioCorridaPanelLayout.setHorizontalGroup(
+            relatorioCorridaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(relatorioCorridaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(relatorioCorridaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
+                    .addGroup(relatorioCorridaPanelLayout.createSequentialGroup()
+                        .addComponent(relatorioComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        relatorioCorridaPanelLayout.setVerticalGroup(
+            relatorioCorridaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, relatorioCorridaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(relatorioComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         layeredPane.setLayer(resultadoCorridasPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layeredPane.setLayer(iniciarTemporadaPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
         layeredPane.setLayer(resultadoTemporadaPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        layeredPane.setLayer(relatorioCorridaPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layeredPaneLayout = new javax.swing.GroupLayout(layeredPane);
         layeredPane.setLayout(layeredPaneLayout);
@@ -217,6 +258,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(resultadoTemporadaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layeredPaneLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(relatorioCorridaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layeredPaneLayout.setVerticalGroup(
             layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,6 +280,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(resultadoTemporadaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layeredPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layeredPaneLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(relatorioCorridaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jMenu1.setText("Iniciar");
@@ -242,19 +293,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 jMenu1MouseClicked(evt);
             }
         });
-
-        opIniciarCorrida.setText("Iniciar corrida");
-        opIniciarCorrida.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opIniciarCorridaMouseClicked(evt);
-            }
-        });
-        opIniciarCorrida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opIniciarCorridaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(opIniciarCorrida);
 
         opIniciarTemporada.setText("Iniciar temporada");
         opIniciarTemporada.addActionListener(new java.awt.event.ActionListener() {
@@ -268,23 +306,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Relatórios");
 
-        jMenuItem3.setText("Equipes");
-        jMenu2.add(jMenuItem3);
+        opRelatorioCorrida.setText("Corrida");
+        opRelatorioCorrida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opRelatorioCorridaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(opRelatorioCorrida);
 
         menuBar.add(jMenu2);
 
         jMenu3.setText("Resultados");
 
-        jMenuItem4.setText("Resultado de corrida");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        opResultadoCorrida.setText("Resultado de corrida");
+        opResultadoCorrida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                opResultadoCorridaActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem4);
+        jMenu3.add(opResultadoCorrida);
 
-        jMenuItem5.setText("Resultado da temporada");
-        jMenu3.add(jMenuItem5);
+        opResultadoTemporada.setText("Resultado da temporada");
+        opResultadoTemporada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opResultadoTemporadaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(opResultadoTemporada);
 
         menuBar.add(jMenu3);
 
@@ -311,30 +359,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenu1MouseClicked
 
-    private void opIniciarCorridaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opIniciarCorridaMouseClicked
-        // TODO add your handling code here:        
-    }//GEN-LAST:event_opIniciarCorridaMouseClicked
-
-    private void opIniciarCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opIniciarCorridaActionPerformed
-        
-    }//GEN-LAST:event_opIniciarCorridaActionPerformed
-
     private void opIniciarTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opIniciarTemporadaActionPerformed
     
-//        try {
-//            temporada.iniciarTodasCorridas();
-//        } catch (InterruptedException ex){
-//            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        iniciarTemporadaPanel.setVisible(true);
+        try {
+            iniciarCorrida();
+        } catch (InterruptedException ex){
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        logIniciarTemporadaTextArea.setText("As corridas foram iniciadas automaticamente!\n"
+                + "Para visualizar o resultado veja a aba Resultados\n"
+                + "Para visualizar os relatórios veja a aba de Relatórios");
+        switchPanels(iniciarTemporadaPanel);
+        for(Corrida corrida: temporada.getCorridas()){
+            corridasComboBox.addItem(corrida.nomeGP);
+            relatorioComboBox.addItem(corrida.nomeGP);
+        }
+        
     }//GEN-LAST:event_opIniciarTemporadaActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void opResultadoCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opResultadoCorridaActionPerformed
         switchPanels(resultadoCorridasPanel);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_opResultadoCorridaActionPerformed
 
     private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
+        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
     }//GEN-LAST:event_corridasComboBoxActionPerformed
+
+    private void opResultadoTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opResultadoTemporadaActionPerformed
+        switchPanels(resultadoTemporadaPanel);
+        resultadoTemporadaTextArea.setText(temporada.colocacaoPilotosFinalTemporada());
+    }//GEN-LAST:event_opResultadoTemporadaActionPerformed
+
+    private void relatorioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioComboBoxActionPerformed
+        relatorioCorridaTextArea.setText(temporada.getCorridas().get(relatorioComboBox.getSelectedIndex()).getLog());
+    }//GEN-LAST:event_relatorioComboBoxActionPerformed
+
+    private void opRelatorioCorridaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opRelatorioCorridaActionPerformed
+        switchPanels(relatorioCorridaPanel);
+    }//GEN-LAST:event_opRelatorioCorridaActionPerformed
 
     private void switchPanels(JPanel target){
         for(JPanel panel: panels){
@@ -385,20 +447,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLayeredPane layeredPane;
-    private javax.swing.JTextArea logCorridaTextArea1;
+    private javax.swing.JTextArea logIniciarTemporadaTextArea;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem opIniciarCorrida;
     private javax.swing.JMenuItem opIniciarTemporada;
+    private javax.swing.JMenuItem opRelatorioCorrida;
+    private javax.swing.JMenuItem opResultadoCorrida;
+    private javax.swing.JMenuItem opResultadoTemporada;
+    private javax.swing.JComboBox<String> relatorioComboBox;
+    private javax.swing.JPanel relatorioCorridaPanel;
+    private javax.swing.JTextArea relatorioCorridaTextArea;
     private javax.swing.JTextArea resultadoCorridaTextArea;
     private javax.swing.JPanel resultadoCorridasPanel;
-    private java.awt.Panel resultadoTemporadaPanel;
+    private javax.swing.JPanel resultadoTemporadaPanel;
     private javax.swing.JTextArea resultadoTemporadaTextArea;
     // End of variables declaration//GEN-END:variables
 }
