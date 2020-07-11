@@ -8,7 +8,9 @@ package com.mycompany.trabalho01;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -55,6 +57,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         panels.add(resultadoCorridasPanel);
         panels.add(resultadoTemporadaPanel);
         panels.add(relatorioCorridaPanel);
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        for(int i=0;i<5;i++)
+            resultadoCorridaTable.getColumnModel().getColumn(i).setCellRenderer( centerRenderer );
+        
+        for(int i=0;i<4;i++)
+            resultadoPilotoTemporadaTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+        for(int i=0;i<3;i++)
+            resultadoEquipeTemporadaTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
     }
     
     private void criarEquipes(int k){
@@ -512,19 +526,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_opResultadoCorridaActionPerformed
 
     private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
-//        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
         int corrida = corridasComboBox.getSelectedIndex();
         ArrayList<Integer> pontuacoes = temporada.getCorridas().get(corrida).getResultPontuacao(); //primeira pontuaçao eh do primeiro lugar, ta em cordem decrescente
         ArrayList<Piloto> pilotos = temporada.getCorridas().get(corrida).getResultPiloto(); //colocaçao do piloto eh a posiçao no array
         ArrayList<String> tempo = temporada.getCorridas().get(corrida).getResultTempoAcumulado(); //crescente, primeiro eh do primeiro lugar
         
-        for(int i=0;i<20;i++){
+        for(int i=0;i<pontuacoes.size();i++){
+            resultadoCorridaTable.setValueAt(i+1, i, 0);
+            resultadoCorridaTable.setValueAt(pilotos.get(i).getId(), i, 1);
+            resultadoCorridaTable.setValueAt(pilotos.get(i).getIdEquipe(), i, 2);
+            resultadoCorridaTable.setValueAt(pontuacoes.get(i), i, 3);
+            resultadoCorridaTable.setValueAt(tempo.get(i), i, 4);
         }
     }//GEN-LAST:event_corridasComboBoxActionPerformed
 
     private void opResultadoTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opResultadoTemporadaActionPerformed
         switchPanels(resultadoTemporadaPanel);
-        resultadoPilotoTemporadaTable.setValueAt("oie", 0, 0);
+        ArrayList<Piloto> pilotos = temporada.getResultPiloto();
+        ArrayList<Integer> pontuacoesPiloto = temporada.getResultPontuacaoPiloto();
+        ArrayList<Integer> pontuacoesEquipe = temporada.getResultPontuacaoEquipe();
+        ArrayList<String> equipes = temporada.getResultEquipeId();
+        for(int i=0;i<pilotos.size();i++){
+            resultadoPilotoTemporadaTable.setValueAt(i+1, i, 0);
+            resultadoPilotoTemporadaTable.setValueAt(pilotos.get(i).getId(), i, 1);
+            resultadoPilotoTemporadaTable.setValueAt(pilotos.get(i).getIdEquipe(), i, 2);
+            resultadoPilotoTemporadaTable.setValueAt(pontuacoesPiloto.get(i), i, 3);
+        }
+        
+        for(int i=0;i<equipes.size();i++){
+            resultadoEquipeTemporadaTable.setValueAt(i+1, i, 0);
+            resultadoEquipeTemporadaTable.setValueAt(equipes.get(i), i, 1);
+            resultadoEquipeTemporadaTable.setValueAt(pontuacoesEquipe.get(i), i, 2);
+        }
+
     }//GEN-LAST:event_opResultadoTemporadaActionPerformed
 
     private void relatorioComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relatorioComboBoxActionPerformed
