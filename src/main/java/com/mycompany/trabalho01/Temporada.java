@@ -117,6 +117,7 @@ public class Temporada {
         
         for(Equipe equipe: equipes){
             resultEquipeId.add(equipe.getId());
+            resultPontuacaoEquipe.add(equipe.getPontosTotal());
         }
     }
     
