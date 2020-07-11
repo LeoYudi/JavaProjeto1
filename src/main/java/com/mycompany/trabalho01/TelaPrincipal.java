@@ -121,6 +121,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        corridasComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                corridasComboBoxMouseClicked(evt);
+            }
+        });
         corridasComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 corridasComboBoxActionPerformed(evt);
@@ -434,17 +439,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void corridasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_corridasComboBoxActionPerformed
-
-        switch(corridasComboBox.getSelectedIndex()){
-            case 0:
-                resultadoCorridaTextArea.setText(temporada.getCorridas().get(0).nomeGP);
-                break;
-            
-            case 1:
-                resultadoCorridaTextArea.setText(temporada.getCorridas().get(1).nomeGP);
-                break;
-        }
     }//GEN-LAST:event_corridasComboBoxActionPerformed
+
+    private void corridasComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_corridasComboBoxMouseClicked
+        resultadoCorridaTextArea.setText(temporada.getCorridas().get(corridasComboBox.getSelectedIndex()).resultadoCorrida());
+    }//GEN-LAST:event_corridasComboBoxMouseClicked
 
     private void switchPanels(JPanel panel){
         layeredPane.removeAll();
