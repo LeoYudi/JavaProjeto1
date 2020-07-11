@@ -184,8 +184,8 @@ public class Corrida {
     public void inicia() throws InterruptedException{
         resetarTempoDosCarros();
         gerarPosicoesDeLargada();
+        log.append("Posições de largada\n");
         atualizarPosicaoDepoisDaVolta();
-        log.append("\n");
         
         int voltaChuva = eventos.randomVolta(qtdVoltas-2);
         int voltaAcidente = eventos.randomVolta(qtdVoltas-2);
@@ -209,12 +209,12 @@ public class Corrida {
             } 
                 
             if(volta == voltaChuva){
-                log.append(String.format("Chuva volta: "+volta));
+                log.append(String.format("Chuva volta: "+volta+"\n"));
                 log.append("\n");
                 chuva();
             }
             else if(volta == voltaAcidente) {
-                log.append(String.format("Acidente volta: "+volta));
+                log.append(String.format("Acidente volta: "+volta+"\n"));
                 acidenteCarros();
             }
             
@@ -311,20 +311,24 @@ public class Corrida {
 //            System.out.println("ACIDENTE");
             Random random = new Random();
             
-            int quantCarrosEnvolvidos = eventos.quantCarrosAcidente(carros.size());
             int quantCarrosQuebrados = carrosQuebrados();
-            int posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
+            int quantCarrosEnvolvidos = eventos.quantCarrosAcidente(carros.size() - quantCarrosQuebrados);
+            int posicao;
+            if(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos >= 0){
+                posicao = 1;
+            }
+            else posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
             posicao++;
-            log.append(String.format("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos+"\n"));
+            log.append(String.format("Posição acidente>>>>" + posicao + " Quantidade de carros envolvidos>>>>"+quantCarrosEnvolvidos+"\n"));
 //            System.out.println("posicao acidente>>>>" + posicao + " quantCarros acidente>>>>"+quantCarrosEnvolvidos);
            
             int i=0;
             synchronized (carros){ 
                 while(i<quantCarrosEnvolvidos){
-                    carros.get(posicao+i).setAcidente(true);
-                    carros.get(posicao+i).setLog(log);
-                    log.append(String.format("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro()+"\n"));
-//                    System.out.println("Carro envolvido posicao: "+ (posicao+i)+ "ID: "+ carros.get(posicao+i).getIdCarro());
+                    carros.get(posicao+i-1).setAcidente(true);
+                    carros.get(posicao+i-1).setLog(log);
+                    log.append(String.format("Carro envolvido posicao: "+ (posicao+i)+ " ID: "+ carros.get(posicao+i-1).getIdCarro()+"\n"));
+//                    System.out.println("Carro envolvido posicao: "+ (posicao+i-1)+ "ID: "+ carros.get(posicao+i-1).getIdCarro());
                     i++;
                 }
             }
