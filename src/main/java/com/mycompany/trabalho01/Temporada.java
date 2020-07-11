@@ -54,6 +54,15 @@ public class Temporada {
     }
 
     /*
+    Essa função inicia todas as corridas de uma temporada
+    */
+    public void iniciarTodasCorridas() throws InterruptedException{
+        for(Corrida corrida: corridas){
+            iniciarProximaCorrida();
+        }
+    }
+    
+    /*
     Retorna uma string com o nome, colocação e pontuação do piloto na temporada
     Essa string está ordenada de acordo com a pontuação do piloto
     */
