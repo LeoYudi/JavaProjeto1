@@ -12,23 +12,26 @@ public class Temporada {
     
     private ArrayList<Corrida> corridas;
     private ArrayList<Carro> carros;
+    private ArrayList<Equipe> equipes;
     private int qtdTotalCorridas;
     private int qtdCorridasTerminadas;
     
-    private ArrayList<String> resultPilotoId;
-    private ArrayList<Integer> resultPontuacao;
-    private ArrayList<Integer> resultColocacao;
-    private ArrayList<String> resultEquipeId;
+    private ArrayList<Piloto> resultPiloto;
+    private ArrayList<Integer> resultPontuacaoPiloto;
     
-    public Temporada(ArrayList<Corrida> corridas, ArrayList<Carro> carros){
+    private ArrayList<String> resultEquipeId;
+    private ArrayList<Integer> resultPontuacaoEquipe;
+    
+    public Temporada(ArrayList<Corrida> corridas, ArrayList<Carro> carros, ArrayList<Equipe> equipes){
         this.corridas = corridas;
         this.carros = carros;
+        this.equipes = equipes;
         this.qtdTotalCorridas = corridas.size();
         this.qtdCorridasTerminadas = 0;
-        this.resultPilotoId = new ArrayList<>();
-        this.resultPontuacao = new ArrayList<>();
-        this.resultColocacao = new ArrayList<>();
+        this.resultPiloto = new ArrayList<>();
+        this.resultPontuacaoPiloto = new ArrayList<>();
         this.resultEquipeId = new ArrayList<>();
+        this.resultPontuacaoEquipe = new ArrayList<>();
     }
 
     /*
@@ -64,6 +67,8 @@ public class Temporada {
         for(Corrida corrida: corridas){
             iniciarProximaCorrida();
         }
+        montarResultadosPilotos();
+        montarResultadosEquipes();
     }
     
     /*
@@ -80,10 +85,8 @@ public class Temporada {
         pilotos.sort(new PontuacaoTemporadaPilotoComparator()); //ordenando de acordo com a pontuação total na competição
         for(int i = 0; i < pilotos.size(); i++){
             Piloto piloto = pilotos.get(i);
-            resultPilotoId.add(piloto.getId());
-            resultColocacao.add(i+1);
-            resultPontuacao.add(piloto.getPontuacaoTotal());
-            resultEquipeId.add(piloto.getIdEquipe());
+            resultPiloto.add(piloto);
+            resultPontuacaoPiloto.add(piloto.getPontuacaoTotal());
             str.append(String.format("Nome: "+piloto.getId()+" Colocação: "+(i+1)+ 
                     " Pontuação: "+piloto.getPontuacaoTotal()+"\n"));
         }
@@ -93,7 +96,7 @@ public class Temporada {
     /*
     Popula os arraylists de resultados da corrida
     */
-    public void montarResultados(){
+    public void montarResultadosPilotos(){
         ArrayList<Piloto> pilotos = new ArrayList<>();
         for(Carro carro: carros){
             Piloto piloto = carro.getPiloto();
@@ -104,10 +107,16 @@ public class Temporada {
         
         for(int i = 0; i < pilotos.size(); i++){
             Piloto piloto = pilotos.get(i);
-            resultPilotoId.add(piloto.getId());
-            resultColocacao.add(i+1);
-            resultPontuacao.add(piloto.getPontuacaoTotal());
-            resultEquipeId.add(piloto.getIdEquipe());
+            resultPiloto.add(piloto);
+            resultPontuacaoPiloto.add(piloto.getPontuacaoTotal());
+        }
+    }
+    
+    public void montarResultadosEquipes(){
+        equipes.sort(new PontuacaoTemporadaEquipeComparator());
+        
+        for(Equipe equipe: equipes){
+            resultEquipeId.add(equipe.getId());
         }
     }
     
@@ -143,16 +152,16 @@ public class Temporada {
         this.qtdCorridasTerminadas = qtdCorridasTerminadas;
     }
 
-    public ArrayList<String> getResultPilotoId() {
-        return resultPilotoId;
+    public ArrayList<Piloto> getResultPiloto() {
+        return resultPiloto;
     }
 
-        public ArrayList<Integer> getPontuacao() {
-        return resultPontuacao;
+    public ArrayList<Integer> getResultPontuacaoPiloto() {
+        return resultPontuacaoPiloto;
     }
 
-    public ArrayList<Integer> getResultColocacao() {
-        return resultColocacao;
+    public ArrayList<Integer> getResultPontuacaoEquipe() {
+        return resultPontuacaoEquipe;
     }
 
     public ArrayList<String> getResultEquipeId() {
