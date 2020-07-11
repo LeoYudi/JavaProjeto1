@@ -58,6 +58,9 @@ public class Carro implements Runnable{
             return estado;
         }
         
+        /** Método para converter um inteiro para um tipo de estado
+        * @return estado 
+        */
         public static estado fromInteger(int x){
             switch(x){
                 case 0:
@@ -86,7 +89,15 @@ public class Carro implements Runnable{
         this.idEquipe = idEquipe;
     }
     
-    //uma volta
+    /** Método que realiza uma volta na corrida em um carro, neste é verificado gasolina, desgaste e a probabilidade de realizar os eventos
+    * @see equipe.abastecer(Carro)
+    * @see chuva()
+    * @see acidente()
+    * @see eventos.pitstop()
+    * @see eventos.quebraCarro()
+    * @see equipe.pitstop()
+    * @see quebrar()
+    */
     @Override
     public void run() {
         DecimalFormat df = new DecimalFormat("0.000");
@@ -282,6 +293,10 @@ public class Carro implements Runnable{
             return minutesToTime(tempoAcumulado);
     }
     
+    /** Método para converter os minutos em formato de horas:minutos:segundos
+     * @return String - formato de horas:minutos:segundos
+     * @param double - minutos
+    */
     public String minutesToTime(double minutes){
         String[] aux = String.format("%.6f", minutes).split(",");
         int parteInteira = Integer.parseInt(aux[0]);
@@ -293,6 +308,9 @@ public class Carro implements Runnable{
         return String.format("%02d:%02d:%02d", hora, minuto, segundo);
     }
     
+    /** Método utilizado para transitar o carro de uma corrida para outra, atualizando seus atributos
+     * @param Corrida - próxima corrida a ser realizada
+    */
     public void resetar(Corrida novaCorrida){
         this.corridaAtual = novaCorrida;
         this.quebrado = false;
@@ -302,6 +320,9 @@ public class Carro implements Runnable{
         this.e = estado.fromInteger(0);
     }
     
+    /** Método reduzir velocidade do carro
+     * @param double - porcentagem que a velocidade será reduzida 
+    */
     public void reduzVelocidade(double porcentagem){
         DecimalFormat df = new DecimalFormat("0.00");
         this.velocidade -= this.velocidade*porcentagem;
@@ -312,6 +333,10 @@ public class Carro implements Runnable{
         }
     }
     
+    /** Método que trata impacto da chuva na corrida
+     * @see reduzVelocidade(double) 
+     * @see equipe.trocaPneu(Carro)
+    */
     public void chuva(){
         DecimalFormat df = new DecimalFormat("0.00");
         double porcentagem = Math.random();
@@ -332,6 +357,10 @@ public class Carro implements Runnable{
         chuva = false;
     }
     
+    /** Método que trata impacto de um acidente na corrida
+     * @see eventos.quebraCarro(Carro)
+     * @see quebrar()
+     */
     public void acidente(){
         Eventos eventos = new Eventos();
         double porcentagem = Math.random();
@@ -353,6 +382,8 @@ public class Carro implements Runnable{
         acidente = false;
     }
    
+    /** Método que altera atributos do carro para representar que ele está quebrado
+     */
     public void quebrar(){
         quebrado = true;
         tempoUltimaVolta = 0;
