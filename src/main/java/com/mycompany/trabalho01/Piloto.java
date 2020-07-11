@@ -12,13 +12,13 @@ import java.util.ArrayList;
  * @author rebeca
  */
 public class Piloto{
-    String idEquipe;
-    String id;
-    Engenheiro engenheiro;
-    String idCarro;
-    ArrayList<Integer> pontuacao; //de cada corrida
-    ArrayList<Integer> colocacao; //de cada corrida
-    int pontuacaoTotal; //acumulado de pontos das corridas
+    private String idEquipe;
+    private String id;
+    private Engenheiro engenheiro;
+    private String idCarro;
+    private ArrayList<Integer> pontuacao; //de cada corrida
+    private ArrayList<Integer> colocacao; //de cada corrida
+    private int pontuacaoTotal; //acumulado de pontos das corridas
 
     public Piloto(String idEquipe, String id, Engenheiro engenheiro, String idCarro) {
         this.idEquipe = idEquipe;
@@ -67,8 +67,8 @@ public class Piloto{
         return pontuacao;
     }
     
-    /*
-    Retorna a pontuação da posição final do arraylist
+    /** Método que retorna a pontuação da última corrida
+     * @return int Pontuação da última corrida
     */
     public int getPontuacaoUltimaCorrida(){
         return pontuacao.get(pontuacao.size() - 1);
@@ -94,6 +94,12 @@ public class Piloto{
         this.pontuacaoTotal = pontuacaoTotal;
     }
 
+    /**
+     * Método que adiciona a pontuação e a colocação na última corrida. 
+     * A pontuação total do piloto na temporada também é incrementada
+     * @param pontosCorrida Quantos pontos o piloto obteve na corrida
+     * @param posicaoFinal Em qual posição o piloto terminou a corrida
+     */
     public void addResultado(int pontosCorrida, int posicaoFinal){
         pontuacao.add(pontosCorrida);
         colocacao.add(posicaoFinal);
