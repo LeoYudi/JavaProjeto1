@@ -135,7 +135,7 @@ public class Carro implements Runnable{
             
             this.velocidade -= this.desgaste*1.2;
             
-            tempoUltimaVolta = (this.corridaAtual.distanciaVolta/(double)this.velocidade)*60; //tempo em minutos 
+            tempoUltimaVolta = (this.corridaAtual.getDistanciaVolta()/(double)this.velocidade)*60; //tempo em minutos 
             
             if(pitstop){
                 if(eventos.pitStop(this)){
@@ -145,7 +145,7 @@ public class Carro implements Runnable{
                     corridaAtual.appendLog("\n");
                 }
                 else{
-                    this.desgaste += this.corridaAtual.distanciaVolta;
+                    this.desgaste += this.corridaAtual.getDistanciaVolta();
                 }
             }
             

@@ -18,17 +18,17 @@ import javax.swing.JTextArea;
  * @author rebeca
  */
 public class Corrida {
-    String nomeGP;
-    String cidade;
-    ArrayList<Equipe> equipes;
-    Eventos eventos;
-    boolean run = true;
-    ArrayList<Carro> carros;
-    int qtdVoltas;
-    int distanciaVolta;
-    boolean chuva = false;
-    StringBuffer log;
-    int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
+    private String nomeGP;
+    private String cidade;
+    private ArrayList<Equipe> equipes;
+    private Eventos eventos;
+    private boolean run = true;
+    private ArrayList<Carro> carros;
+    private int qtdVoltas;
+    private int distanciaVolta;
+    private boolean chuva = false;
+    private StringBuffer log;
+    private int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
                                                                 //a partir do décimo não ganha ponto
     private ArrayList<Piloto> resultPiloto;
     private ArrayList<String> resultTempoAcumulado;
