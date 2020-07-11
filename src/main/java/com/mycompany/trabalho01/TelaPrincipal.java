@@ -501,8 +501,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 + "Para visualizar os relatórios veja a aba de Relatórios");
         switchPanels(iniciarTemporadaPanel);
         for(Corrida corrida: temporada.getCorridas()){
-            corridasComboBox.addItem(corrida.nomeGP);
-            relatorioComboBox.addItem(corrida.nomeGP);
+            corridasComboBox.addItem(corrida.getNomeGP());
+            relatorioComboBox.addItem(corrida.getNomeGP());
         }
         
     }//GEN-LAST:event_opIniciarTemporadaActionPerformed
@@ -524,7 +524,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void opResultadoTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opResultadoTemporadaActionPerformed
         switchPanels(resultadoTemporadaPanel);
-        System.out.println(temporada.colocacaoPilotosFinalTemporada());
         resultadoPilotoTemporadaTable.setValueAt("oie", 0, 0);
     }//GEN-LAST:event_opResultadoTemporadaActionPerformed
 

@@ -18,19 +18,25 @@ public class Mecanico {
         this.idMecanico = idMecanico;
     }  
     
+    /**
+     * Método que zera o desgaste de um carro
+     * @param carro Carro que terá o pneu trocado
+     * @return double Valor entre 0 e 1 que representa o tempo levado para troca do pneu
+     */
     public double trocarPneu(Carro carro){
         carro.setDesgaste(0);
         return Math.random();
     }
     
+    /**
+     * Método que deixa o tanque com um valor entre 10 e 15 litros de combustível
+     * @param carro Carro que será abastecido
+     * @return double Valor entre 0 e 1 que representa o tempo levado para abastecimento do carro
+     */
     public double abastece(Carro carro){
         Random random = new Random();
         carro.setComb(10+random.nextInt(5));
         return Math.random();
-    }
-    
-    public void imprimir(){
-        System.out.println("Mecânico: "+ idMecanico);
     }
 
     public String getIdMecanico() {

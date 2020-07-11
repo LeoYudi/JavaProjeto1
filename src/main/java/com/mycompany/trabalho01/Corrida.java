@@ -18,17 +18,17 @@ import javax.swing.JTextArea;
  * @author rebeca
  */
 public class Corrida {
-    String nomeGP;
-    String cidade;
-    ArrayList<Equipe> equipes;
-    Eventos eventos;
-    boolean run = true;
-    ArrayList<Carro> carros;
-    int qtdVoltas;
-    int distanciaVolta;
-    boolean chuva = false;
-    StringBuffer log;
-    int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
+    private String nomeGP;
+    private String cidade;
+    private ArrayList<Equipe> equipes;
+    private Eventos eventos;
+    private boolean run = true;
+    private ArrayList<Carro> carros;
+    private int qtdVoltas;
+    private int distanciaVolta;
+    private boolean chuva = false;
+    private StringBuffer log;
+    private int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
                                                                 //a partir do décimo não ganha ponto
     private ArrayList<Piloto> resultPiloto;
     private ArrayList<String> resultTempoAcumulado;
@@ -128,12 +128,19 @@ public class Corrida {
         return resultPontuacao;
     }
     
+    /**
+     * Método que reseta as informações necessárias do 
+     * carro para iniciar uma nova corrida
+     */
     public void resetarTempoDosCarros(){
         for(Carro carro: carros){
             carro.resetar(this);
         }
     }
     
+    /**
+     * Método que atribui posições aleatórias de largada aos carros
+     */
     public void gerarPosicoesDeLargada(){
         ArrayList<Integer> posicoes = new ArrayList<>();
         
@@ -151,14 +158,24 @@ public class Corrida {
         ordenarCarrosPorPosicao();
     }
     
+    /**
+    * Método que ordena os carros de forma crescente baseado na posição de cada um
+    */
     public void ordenarCarrosPorPosicao(){
         carros.sort(new PositionComparator());
     }
     
+    /**
+     * Método que ordena os carros de forma crescente baseado no tempo acumulado de cada um
+     */
     public void ordenarCarrosPorTempoAcumulado(){
         carros.sort(new TimeComparator());
     }
     
+    /**
+     * Método que ordena os carros de forma crescente baseado no 
+     * tempo acumulado e atualiza as posições
+     */
     public void atualizarPosicaoDepoisDaVolta(){
         ordenarCarrosPorTempoAcumulado();
         
@@ -167,14 +184,15 @@ public class Corrida {
         }
         imprimirCarrosEmOrdem();
     }
-        
-    public synchronized void trocarPosicao(int i, int j){
-        //no parâmetro é passado a posição, que começa de 1. O arraylist começa de 0
-        carros.get(i-1).setPosicao(j);
-        carros.get(j-1).setPosicao(i);
-        Collections.swap(carros, i-1, j-1);
-    }
     
+    /**
+     * Método que inicia uma corrida. Os dados de tempo e desgaste dos carros, por exemplo,
+     * são resetados. São geradas posições de largada e definidas em quais voltas haverão
+     * acidentes ou chuva. Ao final de cada volta as posições são atualizadas e as informações
+     * dos carros são gravadas no log da corrida. Ao final da corrida, é atribuída a pontuação
+     * aos pilotos e os resultados são gravados em resultPiloto, resultTempoAcumulado e resultPontuacao.
+     * @throws InterruptedException 
+     */
     public void inicia() throws InterruptedException{
         resetarTempoDosCarros();
         gerarPosicoesDeLargada();
@@ -222,8 +240,8 @@ public class Corrida {
         //log.append(aux);
     }
     
-    /*
-    Popula os arraylists de resultados da corrida
+    /**
+     * Método que armazena os resultados da corrida nos Arraylists correspondentes
     */
     public void montarResultados(){
         for(int i = 0; i < carros.size(); i++){
@@ -234,22 +252,11 @@ public class Corrida {
         }
     }
     
-    /*
-    Retorna uma string com o nome, colocação, pontuação e tempo da corrida de cada piloto naquela corrida
-    */
-    public String resultadoCorrida(){
-        StringBuilder str = new StringBuilder();
-        for(int i = 0; i < carros.size(); i++){
-            str.append(String.format("Nome: "+resultPiloto.get(i).getId()+" Colocação: "+(i+1)+ 
-                    " Pontuação: "+resultPontuacao.get(i)+" Tempo da corrida: "+resultTempoAcumulado.get(i)+"\n"));
-        }
-        return str.toString();
-    }
-    
-    /*
-    Adiciona a pontuação e a colocação final no piloto. Note que regraPontuacao.length é 10, 
-    então só os primeiros dez carros pontuarão. A partir da 11ª colocação, a pontuação é 0
-    */
+    /**
+     * Método que adiciona a pontuação e a colocação final para cada piloto.
+     * A respectiva pontuação para os dez primeiros lugares é feita de acordo com 
+     * a variável regraPontuacao. Do 11° lugar em diante os pilotos não pontuam
+     */
     public void atribuirPontuacao(){
         for(int i = 0; i < carros.size(); i++){
             Piloto piloto = carros.get(i).getPiloto();
@@ -260,19 +267,23 @@ public class Corrida {
         }        
     }
     
+    /**
+     * Método que adiciona as informações dos carros no log da corrida.
+     */
     public void imprimirCarrosEmOrdem(){
         log.append("\n");
         for (Carro carro : carros) {
+
             log.append(String.format("%dº lugar: %s %s  \n", carro.getPosicao(), carro.getIdCarro(), carro.getStringTempoAcumulado()));
         }
     }
     
-    public void imprimir(){
-        for(Equipe e: equipes){
-            e.imprimir();
-        }
-    }
     
+    
+    /**
+     * Método responsável por verificar se está chovendo e diminuir a 
+     * velocidade de todos os carros devido à pista molhada
+     */
     public void chuva(){
         if(eventos.chuva()){
             chuva = true;
@@ -285,6 +296,10 @@ public class Corrida {
         chuva = false;
     }
     
+    /**
+     * Método que calcula a quantidade de carros quebrados na corrida
+     * @return int - Quantidade de carros quebrados na corrida
+     */
     public synchronized int carrosQuebrados(){
         int quebrados = 0;
         for(Carro carro: carros){
@@ -293,6 +308,12 @@ public class Corrida {
         return quebrados;
     }
     
+    /**
+     * Método responsável por realizar o acidente entre dois ou mais carros.
+     * É calculado o tanto de carros envolvidos e a posição do primeiro carro envolvido.
+     * Se o acidente for entre três carros e a posição escolhida for 2, significa que 
+     * houve um acidente entre os carros nas posições 2, 3 e 4
+     */
     public void acidenteCarros(){
 
         if(eventos.acidente()){
@@ -306,7 +327,7 @@ public class Corrida {
             }
             else posicao = random.nextInt(carros.size() - quantCarrosQuebrados - quantCarrosEnvolvidos);
             posicao++;
-                     
+
             int i=0;
             synchronized (carros){ 
                 while(i<quantCarrosEnvolvidos){
