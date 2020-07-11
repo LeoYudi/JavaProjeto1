@@ -43,7 +43,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             corrida.setEquipes(equipes);
         }
 
-        temporada = new Temporada(corridas, carros);
+        temporada = new Temporada(corridas, carros, equipes);
         
         resultadoCorridasPanel.setVisible(false);
         iniciarTemporadaPanel.setVisible(false);
