@@ -91,7 +91,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 //        String log = temporada.iniciarProximaCorrida();
 //        logCorridaTextArea.setText(log);
         temporada.iniciarTodasCorridas();
-        temporada.imprimirLogTodasCorridas();
     }
     
     @SuppressWarnings("unchecked")
