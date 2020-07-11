@@ -30,9 +30,8 @@ public class Corrida {
     StringBuffer log;
     int[] regraPontuacao = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1}; //primeiro lugar ganha 25 pontos; segundo ganha 18...
                                                                 //a partir do décimo não ganha ponto
-    private ArrayList<String> resultPilotoId;
+    private ArrayList<Piloto> resultPiloto;
     private ArrayList<String> resultTempoAcumulado;
-    private ArrayList<Integer> resultColocacao;
     private ArrayList<Integer> resultPontuacao;
     
     public Corrida(String nomeGP, String cidade, int qtdVoltas, int distanciaVolta) {
@@ -44,9 +43,8 @@ public class Corrida {
         this.distanciaVolta = distanciaVolta;
         log = new StringBuffer();
         eventos = new Eventos();
-        this.resultPilotoId = new ArrayList<>();
+        this.resultPiloto = new ArrayList<>();
         this.resultTempoAcumulado = new ArrayList<>();
-        this.resultColocacao = new ArrayList<>();
         this.resultPontuacao = new ArrayList<>();
     }
 
@@ -118,16 +116,12 @@ public class Corrida {
         log.append(str);
     }
 
-    public ArrayList<String> getResultPilotoId() {
-        return resultPilotoId;
+    public ArrayList<Piloto> getResultPiloto() {
+        return resultPiloto;
     }
 
     public ArrayList<String> getResultTempoAcumulado() {
         return resultTempoAcumulado;
-    }
-
-    public ArrayList<Integer> getResultColocacao() {
-        return resultColocacao;
     }
 
     public ArrayList<Integer> getResultPontuacao() {
@@ -237,10 +231,9 @@ public class Corrida {
     public void montarResultados(){
         for(int i = 0; i < carros.size(); i++){
             Carro carro = carros.get(i);
-            resultPilotoId.add(carro.getPiloto().getId());
+            resultPiloto.add(carro.getPiloto());
             resultPontuacao.add(carro.getPiloto().getPontuacaoUltimaCorrida());
             resultTempoAcumulado.add(carro.getStringTempoAcumulado());
-            resultColocacao.add(i+1);
         }
     }
     
@@ -250,7 +243,7 @@ public class Corrida {
     public String resultadoCorrida(){
         StringBuilder str = new StringBuilder();
         for(int i = 0; i < carros.size(); i++){
-            str.append(String.format("Nome: "+resultPilotoId.get(i)+" Colocação: "+resultColocacao.get(i)+ 
+            str.append(String.format("Nome: "+resultPiloto.get(i).getId()+" Colocação: "+(i+1)+ 
                     " Pontuação: "+resultPontuacao.get(i)+" Tempo da corrida: "+resultTempoAcumulado.get(i)+"\n"));
         }
         return str.toString();

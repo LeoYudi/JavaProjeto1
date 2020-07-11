@@ -77,7 +77,7 @@ public class Temporada {
             Piloto piloto = carro.getPiloto();
             pilotos.add(piloto);
         }
-        pilotos.sort(new PontuacaoTemporadaComparator()); //ordenando de acordo com a pontuação total na competição
+        pilotos.sort(new PontuacaoTemporadaPilotoComparator()); //ordenando de acordo com a pontuação total na competição
         for(int i = 0; i < pilotos.size(); i++){
             Piloto piloto = pilotos.get(i);
             resultPilotoId.add(piloto.getId());
@@ -100,7 +100,7 @@ public class Temporada {
             pilotos.add(piloto);
         }
         
-        pilotos.sort(new PontuacaoTemporadaComparator()); //ordenando de acordo com a pontuação total na competição
+        pilotos.sort(new PontuacaoTemporadaPilotoComparator()); //ordenando de acordo com a pontuação total na competição
         
         for(int i = 0; i < pilotos.size(); i++){
             Piloto piloto = pilotos.get(i);
