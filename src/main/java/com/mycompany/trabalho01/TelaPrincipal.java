@@ -34,11 +34,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.carros = new ArrayList();
         this.equipes = new ArrayList();
         this.corridas = new ArrayList();
-        criarEquipes(3);
+        criarEquipes(10);
+        mudarNome();
 
         corridas.add(new Corrida("GP do Brasil", "Machado", 20, 8));
         corridas.add(new Corrida("GP da Alemanha", "Berlim", 30, 10));
         corridas.add(new Corrida("GP da Argentina", "Buenos Aires", 20, 8));
+        corridas.add(new Corrida("GP de Zimbabue", "Zimbabue City", 10, 10));
+        corridas.add(new Corrida("GP de Mônaco", "Monte Carlo", 15, 12));
+        
 
         for(Corrida corrida: corridas){
             corrida.setCarros(carros);
@@ -102,6 +106,59 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         }
         
+    }
+    
+    private void mudarNome(){
+       equipes.get(0).setId("Mercedes");
+       equipes.get(0).getPilotos().get(0).setIdEquipe("Mercedes");
+       equipes.get(0).getPilotos().get(1).setIdEquipe("Mercedes");
+       equipes.get(0).getPilotos().get(0).setId("Gabigol Carvalho");
+       equipes.get(0).getPilotos().get(1).setId("Leonardo Menosse");
+       equipes.get(1).setId("Ferrari");
+       equipes.get(1).getPilotos().get(0).setIdEquipe("Ferrari");
+       equipes.get(1).getPilotos().get(1).setIdEquipe("Ferrari");
+       equipes.get(1).getPilotos().get(0).setId("Nana Nakata");
+       equipes.get(1).getPilotos().get(1).setId("Rebeca Padovani");
+       equipes.get(2).setId("McLaren");
+       equipes.get(2).getPilotos().get(0).setIdEquipe("McLaren");
+       equipes.get(2).getPilotos().get(1).setIdEquipe("McLaren");
+       equipes.get(2).getPilotos().get(0).setId("Natana Ederli");
+       equipes.get(2).getPilotos().get(1).setId("Leonardo Yudi");
+       equipes.get(3).setId("RBR-Honda");
+       equipes.get(3).getPilotos().get(0).setIdEquipe("RBR-Honda");
+       equipes.get(3).getPilotos().get(1).setIdEquipe("RBR-Honda");
+       equipes.get(3).getPilotos().get(0).setId("Juliano Kenji");
+       equipes.get(3).getPilotos().get(1).setId("Maria Angélica");
+       equipes.get(4).setId("Renault");
+       equipes.get(4).getPilotos().get(0).setIdEquipe("Renault");
+       equipes.get(4).getPilotos().get(1).setIdEquipe("Renault");
+       equipes.get(4).getPilotos().get(0).setId("Daniel Ricciardo");
+       equipes.get(4).getPilotos().get(1).setId("Glória Ederli");
+       equipes.get(5).setId("Alpha Tauri-Honda");
+       equipes.get(5).getPilotos().get(0).setIdEquipe("Alpha Tauri-Honda");
+       equipes.get(5).getPilotos().get(1).setIdEquipe("Alpha Tauri-Honda");
+       equipes.get(5).getPilotos().get(0).setId("Daniel Ederli");
+       equipes.get(5).getPilotos().get(1).setId("Jonas Padovani");
+       equipes.get(6).setId("Racing Point-Mercedes");
+       equipes.get(6).getPilotos().get(0).setIdEquipe("Racing Point-Mercedes");
+       equipes.get(6).getPilotos().get(1).setIdEquipe("Racing Point Mercedes");
+       equipes.get(6).getPilotos().get(0).setId("Rafael Da Silva");
+       equipes.get(6).getPilotos().get(1).setId("Hudson Hornet");
+       equipes.get(7).setId("Alfa Romeo-Ferrari");
+       equipes.get(7).getPilotos().get(0).setIdEquipe("Alfa Romeo-Ferrari");
+       equipes.get(7).getPilotos().get(1).setIdEquipe("Alfa Romeo-Ferrari");
+       equipes.get(7).getPilotos().get(0).setId("Thales Piteri Ue");
+       equipes.get(7).getPilotos().get(1).setId("Sofia Madalena Lara Ue");
+       equipes.get(8).setId("Haas-Ferrari");
+       equipes.get(8).getPilotos().get(0).setIdEquipe("Haas-Ferrari");
+       equipes.get(8).getPilotos().get(1).setIdEquipe("Haas-Ferrari");
+       equipes.get(8).getPilotos().get(0).setId("Willam Hideki");
+       equipes.get(8).getPilotos().get(1).setId("Levis da Silva");
+       equipes.get(9).setId("Williams-Mercedes");
+       equipes.get(9).getPilotos().get(0).setIdEquipe("Williams-Mercedes");
+       equipes.get(9).getPilotos().get(1).setIdEquipe("Williams-Mercedes");
+       equipes.get(9).getPilotos().get(0).setId("André Henrique Dias");
+       equipes.get(9).getPilotos().get(1).setId("[Julio Leite, 1994]");
     }
     
     /*
