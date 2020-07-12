@@ -132,7 +132,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
        equipes.get(4).setId("Renault");
        equipes.get(4).getPilotos().get(0).setIdEquipe("Renault");
        equipes.get(4).getPilotos().get(1).setIdEquipe("Renault");
-       equipes.get(4).getPilotos().get(0).setId("Daniel Ricciardo");
+       equipes.get(4).getPilotos().get(0).setId("Marquinhos Relâmpago");
        equipes.get(4).getPilotos().get(1).setId("Glória Ederli");
        equipes.get(5).setId("Alpha Tauri-Honda");
        equipes.get(5).getPilotos().get(0).setIdEquipe("Alpha Tauri-Honda");
@@ -203,6 +203,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         opResultadoTemporada = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simulador F1");
 
         corridasComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
