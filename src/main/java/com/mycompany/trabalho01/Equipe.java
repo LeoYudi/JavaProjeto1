@@ -59,9 +59,10 @@ public class Equipe {
         this.mecanicos = mecanicos;
     }
 
-    /*
-    Faz o somatório dos pontos de todos os pilotos da equipe
-    */
+    /**
+     * Método que realiza o somatório dos pontos de todos os pilotos da equipe
+     * @return int - Quantidade de pontos da equipe
+     */
     public int getPontosTotal() {
         int pontos = 0;
         
@@ -76,6 +77,12 @@ public class Equipe {
         this.pontosTotal = pontosTotal;
     }
     
+    /**
+     * Método que adiciona um tempo aleatório na última volta 
+     * do carro devido a parada no pitstop
+     * @param carro Carro que irá para o pitstop
+     * @return String - Texto com as informações do pitstop
+     */
     public String pitStop(Carro carro){
         String aux = "";
         if(carro.isAcidente()) {
@@ -88,6 +95,11 @@ public class Equipe {
         return aux;
     }
     
+    /**
+     * Método que faz o engenheiro solicitar uma troca de pneu em um carro
+     * @param carro Carro a ter o pneu trocado
+     * @return String - Texto com as informações da troca de pneu
+     */
     public String trocarPneu(Carro carro){
         String aux = "";
         if(!carro.isPitstop()){
@@ -97,6 +109,11 @@ public class Equipe {
         return aux;
     }
     
+    /**
+     * Método que faz o engenheiro solicitar abastecimento de combustível em um carro
+     * @param carro Carro a ser abastecido
+     * @return String - Texto com as informações do abastecimento
+     */
     public String abastecer(Carro carro){
         String aux= "";
         if(!carro.isPitstop()){
