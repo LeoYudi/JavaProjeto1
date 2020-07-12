@@ -203,6 +203,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         opResultadoTemporada = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simulador F1");
 
         corridasComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
