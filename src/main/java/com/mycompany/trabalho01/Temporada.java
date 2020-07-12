@@ -170,12 +170,4 @@ public class Temporada {
     public ArrayList<String> getResultEquipeId() {
         return resultEquipeId;
     }
-
-    public ArrayList<Equipe> getEquipes() {
-        return equipes;
-    }
-
-    public void setEquipes(ArrayList<Equipe> equipes) {
-        this.equipes = equipes;
-    }
 }
