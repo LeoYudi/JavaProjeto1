@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
- * @author User
+ * 
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 

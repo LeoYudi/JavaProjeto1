@@ -11,20 +11,11 @@ import javax.swing.JTextArea;
 import java.text.DecimalFormat;
 import java.util.Random;
 
-/**
- *
- * @author rebeca
- */
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 
 /**
  *
- * @author rebeca
+ * 
  */
 public class Carro implements Runnable{
     private Piloto piloto;
@@ -33,7 +24,6 @@ public class Carro implements Runnable{
     private String idCarro;
     private int posicao;
     private int comb;
-   // final int VOLTAS = 10;
     private estado e;
     private int desgaste;
     private boolean chuva;
@@ -171,6 +161,135 @@ public class Carro implements Runnable{
         }
     }
     
+    /** Método que atribui tempo infinito para carros quebrados
+     *  para que fiquem sempre em último na colocação
+    */
+    public String getStringTempoAcumulado(){
+        if(tempoAcumulado == Double.MAX_VALUE)
+            return "Quebrado";
+        else 
+            return minutesToTime(tempoAcumulado);
+    }
+    
+    /** Método para converter os minutos em formato de horas:minutos:segundos
+     * @return String - formato de horas:minutos:segundos
+     * @param minutes - double representando os minutos
+    */
+    public String minutesToTime(double minutes){
+        String[] aux = String.format("%.6f", minutes).split(",");
+        int parteInteira = Integer.parseInt(aux[0]);
+        int parteDecimal = Integer.parseInt(aux[1]);
+        
+        int hora = (int) (parteInteira / 60);
+        int minuto = (int) (parteInteira % 60);
+        int segundo = (int) (parteDecimal * 60 / 1000000); //assumindo 6 casas decimais
+        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
+    }
+    
+    /** Método utilizado para transitar o carro de uma corrida para outra, atualizando seus atributos
+     * @param novaCorrida
+    */
+    public void resetar(Corrida novaCorrida){
+        this.corridaAtual = novaCorrida;
+        this.quebrado = false;
+        this.tempoAcumulado = 0;
+        this.tempoUltimaVolta = 0;
+        this.desgaste = 0;
+        this.e = estado.fromInteger(0);
+    }
+    
+    /** Método reduzir velocidade do carro
+     * @param porcentagem - porcentagem que a velocidade será reduzida 
+    */
+    public void reduzVelocidade(double porcentagem){
+        DecimalFormat df = new DecimalFormat("0.00");
+        this.velocidade -= this.velocidade*porcentagem;
+        if(acidente){
+            String aux ="Acidente--> " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%";
+            corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
+        }
+    }
+    
+    /** Método que trata impacto da chuva na corrida
+    */
+    public void chuva(){
+        DecimalFormat df = new DecimalFormat("0.00");
+        double porcentagem = Math.random();
+        while (porcentagem> 0.5)  porcentagem = Math.random();
+        if(this.velocidade >=230) {
+            reduzVelocidade(porcentagem);
+            String aux = "Chuva--> "+idCarro+ " velocidade reduzida em "+df.format(porcentagem*100)+ "%";
+            System.out.println(aux);
+            corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
+        }
+                                                             //troca Pneu por conta da chuva
+        String trocaPneuChuva = equipe.trocarPneu(this);
+        String aux = "Chuva--> "+idCarro + " trocando pneus>>"+ trocaPneuChuva;
+        corridaAtual.appendLog(aux);
+        corridaAtual.appendLog("\n");
+        
+        chuva = false;
+    }
+    
+    /** Método que trata impacto de um acidente na corrida
+     */
+    public void acidente(){
+        Eventos eventos = new Eventos();
+        double porcentagem = Math.random();
+        while (porcentagem> 0.5)  porcentagem = Math.random();
+        reduzVelocidade(porcentagem);
+        e = estado.fromInteger(2);
+        String aux1 = equipe.pitStop(this);
+        corridaAtual.appendLog(aux1);
+        corridaAtual.appendLog("\n");
+        e = estado.fromInteger(1);
+        pitstop=false;
+        if(eventos.quebraCarro(this)){
+            quebrar();
+            e = estado.fromInteger(0);
+            String aux = idCarro+ " quebrou no acidente";
+            corridaAtual.appendLog(aux);
+            corridaAtual.appendLog("\n");
+        }
+        acidente = false;
+    }
+   
+    /** Método que altera atributos do carro para representar que ele está quebrado
+     */
+    public void quebrar(){
+        quebrado = true;
+        tempoUltimaVolta = 0;
+        tempoAcumulado = Double.MAX_VALUE;
+        desgaste = 0;
+        e = estado.fromInteger(0);
+    }
+
+    public estado getE() {
+        return e;
+    }
+
+    public void setE(estado e) {
+        this.e = e;
+    }
+
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
+
+    public Equipe getEquipe() {
+        return equipe;
+    }    
+
+    public String getIdEquipe() {
+        return idEquipe;
+    }
+
+    public void setIdEquipe(String idEquipe) {
+        this.idEquipe = idEquipe;
+    }
+    
     public Piloto getPiloto() {
         return piloto;
     }
@@ -273,144 +392,5 @@ public class Carro implements Runnable{
 
     public void setPitstop(boolean pitstop) {
         this.pitstop = pitstop;
-    }
-    
-    
-    public String getStringTempoAcumulado(){
-        if(tempoAcumulado == Double.MAX_VALUE)
-            return "Quebrado";
-        else 
-            return minutesToTime(tempoAcumulado);
-    }
-    
-    /** Método para converter os minutos em formato de horas:minutos:segundos
-     * @return String - formato de horas:minutos:segundos
-     * @param minutes - double representando os minutos
-    */
-    public String minutesToTime(double minutes){
-        String[] aux = String.format("%.6f", minutes).split(",");
-        int parteInteira = Integer.parseInt(aux[0]);
-        int parteDecimal = Integer.parseInt(aux[1]);
-        
-        int hora = (int) (parteInteira / 60);
-        int minuto = (int) (parteInteira % 60);
-        int segundo = (int) (parteDecimal * 60 / 1000000); //assumindo 6 casas decimais
-        return String.format("%02d:%02d:%02d", hora, minuto, segundo);
-    }
-    
-    /** Método utilizado para transitar o carro de uma corrida para outra, atualizando seus atributos
-     * @param novaCorrida
-    */
-    public void resetar(Corrida novaCorrida){
-        this.corridaAtual = novaCorrida;
-        this.quebrado = false;
-        this.tempoAcumulado = 0;
-        this.tempoUltimaVolta = 0;
-        this.desgaste = 0;
-        this.e = estado.fromInteger(0);
-    }
-    
-    /** Método reduzir velocidade do carro
-     * @param porcentagem - porcentagem que a velocidade será reduzida 
-    */
-    public void reduzVelocidade(double porcentagem){
-        DecimalFormat df = new DecimalFormat("0.00");
-        this.velocidade -= this.velocidade*porcentagem;
-        if(acidente){
-            String aux ="Acidente--> " +idCarro+ " reduz velocidade em: "+df.format(porcentagem*100)+ "%";
-            corridaAtual.appendLog(aux);
-            corridaAtual.appendLog("\n");
-        }
-    }
-    
-    /** Método que trata impacto da chuva na corrida
-    */
-    public void chuva(){
-        DecimalFormat df = new DecimalFormat("0.00");
-        double porcentagem = Math.random();
-        while (porcentagem> 0.5)  porcentagem = Math.random();
-        if(this.velocidade >=230) {
-            reduzVelocidade(porcentagem);
-            String aux = "Chuva--> "+idCarro+ " velocidade reduzida em "+df.format(porcentagem*100)+ "%";
-            System.out.println(aux);
-            corridaAtual.appendLog(aux);
-            corridaAtual.appendLog("\n");
-        }
-                                                             //troca Pneu por conta da chuva
-        String trocaPneuChuva = equipe.trocarPneu(this);
-        String aux = "Chuva--> "+idCarro + " trocando pneus>>"+ trocaPneuChuva;
-        corridaAtual.appendLog(aux);
-        corridaAtual.appendLog("\n");
-        
-        chuva = false;
-    }
-    
-    /** Método que trata impacto de um acidente na corrida
-     */
-    public void acidente(){
-        Eventos eventos = new Eventos();
-        double porcentagem = Math.random();
-        while (porcentagem> 0.5)  porcentagem = Math.random();
-        reduzVelocidade(porcentagem);
-        e = estado.fromInteger(2);
-        String aux1 = equipe.pitStop(this);
-        corridaAtual.appendLog(aux1);
-        corridaAtual.appendLog("\n");
-        e = estado.fromInteger(1);
-        pitstop=false;
-        if(eventos.quebraCarro(this)){
-            quebrar();
-            e = estado.fromInteger(0);
-            String aux = idCarro+ " quebrou no acidente";
-            corridaAtual.appendLog(aux);
-            corridaAtual.appendLog("\n");
-        }
-        acidente = false;
-    }
-   
-    /** Método que altera atributos do carro para representar que ele está quebrado
-     */
-    public void quebrar(){
-        quebrado = true;
-        tempoUltimaVolta = 0;
-        tempoAcumulado = Double.MAX_VALUE;
-        desgaste = 0;
-        e = estado.fromInteger(0);
-    }
-    
-//    public void pitStop(){
-//        tempoUltimaVolta += 0.33;
-//        pitstop = false;
-//        this.desgaste = 0;
-//        if(acidente) {
-////            System.out.println("ACIDENTE> carro " + idCarro+ " em pitStop");
-//            String aux = "ACIDENTE> carro " + idCarro+ " em pitStop";
-//            corridaAtual.appendLog(aux);
-//            corridaAtual.appendLog("\n");
-//        }
-//    }
-
-    public estado getE() {
-        return e;
-    }
-
-    public void setE(estado e) {
-        this.e = e;
-    }
-
-    public void setEquipe(Equipe equipe) {
-        this.equipe = equipe;
-    }
-
-    public Equipe getEquipe() {
-        return equipe;
-    }    
-
-    public String getIdEquipe() {
-        return idEquipe;
-    }
-
-    public void setIdEquipe(String idEquipe) {
-        this.idEquipe = idEquipe;
     }
 }

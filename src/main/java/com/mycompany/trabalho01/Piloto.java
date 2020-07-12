@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author rebeca
+ * 
  */
 public class Piloto{
     private String idEquipe;

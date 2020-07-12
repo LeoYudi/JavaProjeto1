@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author rebeca
+ *
  */
 public class Corrida {
     private String nomeGP;

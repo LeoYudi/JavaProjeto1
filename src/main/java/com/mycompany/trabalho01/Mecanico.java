@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author rebeca
+ * 
  */
 public class Mecanico {
     private String idMecanico;

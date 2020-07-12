@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author rebeca
+ * 
  */
 public class Engenheiro {
     private String idPiloto;
@@ -37,6 +37,11 @@ public class Engenheiro {
         this.idEngenheiro = idEngenheiro;
     }
     
+    /**
+     * Método que pega o maior tempo do vetor tempos
+     * @param tempos[] que armazena 4 tempos diferentes 
+     * @return double maior que é o maior vaor do vetor
+     */
     public double maiorTempo(double tempos[]){
         double maior = tempos[0]; 
         for(int i =1; i<tempos.length;i++){
@@ -48,6 +53,12 @@ public class Engenheiro {
         return maior;
     }
     
+    /**
+     * Método que aumenta o tempo da volta do carro por trocar pneus
+     * @param mecanicos Mecanico que trocarão o pneu do carro
+     * @param carro Carro que terá o valor do tempo da volta alterado
+     * @return String aux retorna a mensagem que será exibida na interface
+     */
     public String trocarPneu(ArrayList<Mecanico> mecanicos, Carro carro){
         double tempos[] = new double[4];
         
@@ -67,6 +78,12 @@ public class Engenheiro {
         return aux;
     }
     
+    /**
+     * Método aumenta o valor do tempo da volta do carro e que chama o mecÂnico para aumentar o valor do combustível
+     * @param mecanicos Mecanico que abastecerá o carro
+     * @param carro Carro que terá os valores do tempo da volta e do combustível aumentados
+     * @return String aux retorna a mensagem que será exibida na interface
+     */
     public String abastecer(Mecanico mecanico, Carro carro){
         double tempo;
         tempo =  mecanico.abastece(carro);
@@ -77,13 +94,5 @@ public class Engenheiro {
         carro.setTempoUltimaVolta(carro.getTempoUltimaVolta()+ tempo);
         aux+= " //Mecânico: "+mecanico.getIdMecanico() +" abastece em "+ carro.minutesToTime(tempo);
         return aux;
-    }
-    
-    public void trocarPosicao(){
-        
-    }
-    
-    public void imprimir(){
-        System.out.println("Engenheiro:" +idPiloto);
     }
 }
